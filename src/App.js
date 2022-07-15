@@ -5,18 +5,18 @@ import { Route, Switch } from 'react-router-dom';
 import Foods from './Pages/Foods';
 import Drinks from './Pages/Drinks';
 import Login from './Pages/Login';
+import Profile from './Pages/Profile';
 
 function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
       <Route path="/foods" component={ Foods } />
-      {/* <Route path="/foods" component={ Foods } /> */}
       <Route path="/drinks" component={ Drinks } />
-      {/* <Route path="/drink:id" component={ DrinkDetails } /> */}
+      {/* <Route path="/drinks:id" component={ DrinkDetails } /> */}
       {/* <Route path="/foods:id" component={ FoodDetails } /> */}
       {/* <Route path="/drinks:id/in-progress" component={ DrinksInProgress } /> */}
-      {/* <Route path="/profile" component={ Profile } /> */}
+      <Route path="/profile" component={ Profile } />
       {/* <Route path="/done-recipes" component={ DoneRecipes } /> */}
       {/* <Route path="/favorite-recipes" component={ FavoriteRecipes } /> */}
     </Switch>

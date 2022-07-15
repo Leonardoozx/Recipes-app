@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Image from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
+import searchIcon from '../images/searchIcon.svg';
 
 function Header({ renderButton, title }) {
   const [searchBarVisibility, setSearchBarVisibility] = useState(false);
@@ -9,20 +11,23 @@ function Header({ renderButton, title }) {
     <header>
       <h1 data-testid="page-title">{ title }</h1>
 
-      <img
-        src={ Image }
-        alt="#"
-        data-testid="profile-top-btn"
-      />
+      <Link to="/profile">
+        <button type="button">
+          <img
+            src={ Image }
+            alt="#"
+            data-testid="profile-top-btn"
+          />
+        </button>
+      </Link>
 
       { renderButton
         && (
           <button
-            data-testid="search-top-btn"
             type="button"
             onClick={ () => setSearchBarVisibility((xBoolean) => !xBoolean) }
           >
-            { !searchBarVisibility ? 'Search Bar' : 'Hide' }
+            <img data-testid="search-top-btn" src={ searchIcon } alt="" />
           </button>)}
 
       { searchBarVisibility
