@@ -6,7 +6,6 @@ export const mealsThunk = (searchBarInput, searchCondition) => {
   let URL = '';
   if (searchCondition === 'First letter' && searchBarInput.length >= 2) {
     global.alert('Your search must have only 1 (one) character');
-    return;
   }
   switch (searchCondition) {
   case 'Ingredient':
