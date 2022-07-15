@@ -16,7 +16,7 @@ describe('Testing if the Header component renders everything it needs to', () =>
 
     userEvent.click(profileButtonEl);
 
-    expect(screen.getByTestId('page-title')).toBeInTheDocument();
+    expect(screen.getByTestId('page-title')).toHaveTextContent(/profile/i);
 
     expect(history.location.pathname).toBe('/profile');
 
