@@ -1,24 +1,27 @@
-import React from 'react'
-import { render } from "@testing-library/react";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from 'history';
-import { legacy_createStore as createStore } from 'redux'
-import { Provider } from 'react-redux'
+import React from 'react';
 import { render } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
+import {  legacy_createStore as createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from '../../Redux/Reducers';
 
-const renderWithRouterAndRedux = (
-  component,
-  { initialState, store = createStore(reducer, initialState) } = {}
-) => {
-  const history = createMemoryHistory();
+export const renderWithRouterAndRedux = (component, initialState, route = '/') => {
+  const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
+  const history = createMemoryHistory({ initialEntries: [route] });
+
   return {
     ...render(
-    <Provider store={store}>
-      <Router history={ history }>
-        {component}
-      </Router>
-    </Provider>), store, history
-  }
-}
+      <Provider store={ store }>
+        <Router history={ history }>
+          {component}
+        </Router>
+      </Provider>,
+    ),
+    history,
+    store,
+  };
+};
 
 export default renderWithRouterAndRedux;
