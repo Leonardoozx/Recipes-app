@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import useGenericState from '../Hooks/useGenericState';
@@ -8,7 +8,10 @@ function SearchBar({ dispatchMeals }) {
   const initialState = {
     searchBarInput: '',
     searchCondition: '',
+    url: '',
   };
+
+  const [hasCondition, setCondition] = useState(true);
 
   const [genericState, updateGenericState] = useGenericState(initialState);
 
@@ -33,6 +36,9 @@ function SearchBar({ dispatchMeals }) {
           id="ingredient"
           value="Ingredient"
           onClick={ updateGenericState }
+          // A linha abaixo serve pra não deixar alguém clicar no searchButton antes de selecionar algum radio
+          onChange={ () => setCondition(false) }
+
         />
       </label>
 
@@ -45,6 +51,7 @@ function SearchBar({ dispatchMeals }) {
           id="name"
           value="Name"
           onClick={ updateGenericState }
+          onChange={ () => setCondition(false) }
         />
       </label>
 
@@ -57,12 +64,14 @@ function SearchBar({ dispatchMeals }) {
           value="First letter"
           id="firstLetter"
           onClick={ updateGenericState }
+          onChange={ () => setCondition(false) }
         />
       </label>
 
       <button
         data-testid="exec-search-btn"
         type="button"
+        disabled={ hasCondition }
         onClick={ () => dispatchMeals(searchBarInput, searchCondition) }
       >
         Search

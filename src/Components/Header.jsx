@@ -25,7 +25,7 @@ function Header({ renderButton, title }) {
         && (
           <button
             type="button"
-            onClick={ () => setSearchBarVisibility((xBoolean) => !xBoolean) }
+            onClick={ () => setSearchBarVisibility((prevState) => !prevState) }
           >
             <img
               data-testid="search-top-btn"

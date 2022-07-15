@@ -4,6 +4,10 @@ export const actSendMeals = (payload) => ({ type: SEND_MEALS, payload });
 
 export const mealsThunk = (searchBarInput, searchCondition) => {
   let URL = '';
+  if (searchCondition === 'First letter' && searchBarInput.length >= 2) {
+    global.alert('Your search must have only 1 (one) character');
+    return;
+  }
   switch (searchCondition) {
   case 'Ingredient':
     URL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchBarInput}`;
@@ -17,6 +21,10 @@ export const mealsThunk = (searchBarInput, searchCondition) => {
   }
   return async (dispatch) => {
     const request = await fetch(URL).then((response) => response.json());
+    if (request.meals === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      return;
+    }
     dispatch(actSendMeals(request));
   };
 };
