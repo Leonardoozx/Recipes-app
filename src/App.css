@@ -68,13 +68,12 @@
 }
 
 footer {
-  position: fixed;
-  display: flex !important;
+  bottom: 0;
+  display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  width: 100%;
   min-height: 40px;
   padding: 10px;
-  bottom: 0px;
-  border:1px solid black;
+  position: fixed;
+  width: 100%;
 }
