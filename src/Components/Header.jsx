@@ -15,7 +15,7 @@ function Header({ renderButton, title }) {
         <button type="button">
           <img
             src={ Image }
-            alt="#"
+            alt="top button img"
             data-testid="profile-top-btn"
           />
         </button>
@@ -27,7 +27,11 @@ function Header({ renderButton, title }) {
             type="button"
             onClick={ () => setSearchBarVisibility((xBoolean) => !xBoolean) }
           >
-            <img data-testid="search-top-btn" src={ searchIcon } alt="" />
+            <img
+              data-testid="search-top-btn"
+              src={ searchIcon }
+              alt="search button img"
+            />
           </button>)}
 
       { searchBarVisibility
