@@ -49,7 +49,7 @@ function Login() {
         Password:
         <input
           data-testid="password-input"
-          type="text"
+          type="password"
           name="passwordInput"
           id="passwordInput"
           value={ passwordInput }

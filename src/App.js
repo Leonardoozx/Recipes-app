@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import Foods from './Pages/Foods';
 import Drinks from './Pages/Drinks';
 import Login from './Pages/Login';
+import Profile from './Pages/Profile';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       {/* <Route path="/drink:id" component={ DrinkDetails } /> */}
       {/* <Route path="/foods:id" component={ FoodDetails } /> */}
       {/* <Route path="/drinks:id/in-progress" component={ DrinksInProgress } /> */}
-      {/* <Route path="/profile" component={ Profile } /> */}
+      <Route path="/profile" component={ Profile } />
       {/* <Route path="/done-recipes" component={ DoneRecipes } /> */}
       {/* <Route path="/favorite-recipes" component={ FavoriteRecipes } /> */}
     </Switch>
