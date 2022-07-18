@@ -11,7 +11,6 @@ function App() {
     <Switch>
       <Route exact path="/" component={ Login } />
       <Route path="/foods" component={ Foods } />
-      {/* <Route path="/foods" component={ Foods } /> */}
       <Route path="/drinks" component={ Drinks } />
       {/* <Route path="/drink:id" component={ DrinkDetails } /> */}
       {/* <Route path="/foods:id" component={ FoodDetails } /> */}

@@ -1,11 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { mealsThunk } from '../Redux/Actions';
 import Footer from '../Components/Footer';
+import Header from '../Components/Header';
+import RecipeCard from '../Components/RecipeCard';
 
-const Drinks = () => (
-  <>
-    <h1>Drinks</h1>
-    <Footer />
-  </>
-);
+const Drinks = ({ drinks, dispatchMeals }) => {
+  useEffect(() => {
+    dispatchMeals('', 'Name', '/drinks');
+  }, [dispatchMeals]);
+  return (
+    <div>
+      <Header renderButton title="Drinks" />
+      <section className="recipes-container">
+        {
+          drinks.map((drink, index) => (
+            <RecipeCard
+              key={ drink.idDrink }
+              id={ index }
+              thumb={ drink.strDrinkThumb }
+              name={ drink.strDrink }
+            />
+          ))
+        }
+      </section>
+      <Footer />
+    </div>
+  );
+};
 
-export default Drinks;
+Drinks.propTypes = {
+  drinks: PropTypes.instanceOf(Array).isRequired,
+  dispatchMeals: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchMeals: (...params) => dispatch(mealsThunk(...params)),
+});
+
+const mapStateToProps = (state) => ({
+  drinks: state.mealsReducer.recipes.drinks,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Drinks);

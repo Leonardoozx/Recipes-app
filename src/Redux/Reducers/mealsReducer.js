@@ -1,7 +1,7 @@
 import { SEND_MEALS } from '../Actions';
 
 const INITAL_STATE = {
-  meals: [{}],
+  recipes: { meals: [], drinks: [] },
 };
 
 const mealsReducer = (state = INITAL_STATE, action) => {
@@ -9,7 +9,10 @@ const mealsReducer = (state = INITAL_STATE, action) => {
   case SEND_MEALS:
     return {
       ...state,
-      meals: action.payload,
+      recipes: {
+        ...state.recipes,
+        ...action.payload,
+      },
     };
   default:
     return { ...state };
