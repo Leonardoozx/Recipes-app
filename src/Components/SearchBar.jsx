@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useGenericState from '../Hooks/useGenericState';
 import { mealsThunk } from '../Redux/Actions';
 
 function SearchBar({ dispatchMeals }) {
+  const history = useHistory();
   const initialState = {
     searchBarInput: '',
-    searchCondition: '',
-    url: '',
+    searchCondition: 'Ingredient',
   };
 
   const [hasCondition, setCondition] = useState(true);
@@ -16,6 +17,16 @@ function SearchBar({ dispatchMeals }) {
   const [genericState, updateGenericState] = useGenericState(initialState);
 
   const { searchBarInput, searchCondition } = genericState;
+
+  const submitSearch = () => {
+    if (searchCondition === 'First letter' && searchBarInput.length !== 1) {
+      global.alert('Your search must have only 1 (one) character');
+    } else if (searchBarInput.length < 1) {
+      global.alert('Fill in the search field');
+    } else {
+      dispatchMeals(searchBarInput, searchCondition, history.location.pathname);
+    }
+  };
 
   return (
     <form>
@@ -36,9 +47,7 @@ function SearchBar({ dispatchMeals }) {
           id="ingredient"
           value="Ingredient"
           onClick={ updateGenericState }
-          // A linha abaixo serve pra não deixar alguém clicar no searchButton antes de selecionar algum radio
-          onChange={ () => setCondition(false) }
-
+          defaultChecked
         />
       </label>
 
@@ -71,8 +80,7 @@ function SearchBar({ dispatchMeals }) {
       <button
         data-testid="exec-search-btn"
         type="button"
-        disabled={ hasCondition }
-        onClick={ () => dispatchMeals(searchBarInput, searchCondition) }
+        onClick={ submitSearch }
       >
         Search
       </button>
