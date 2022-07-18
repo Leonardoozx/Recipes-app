@@ -12,13 +12,12 @@ function SearchBar({ dispatchMeals }) {
     searchCondition: 'Ingredient',
   };
 
-  const [hasCondition, setCondition] = useState(true);
-
   const [genericState, updateGenericState] = useGenericState(initialState);
 
   const { searchBarInput, searchCondition } = genericState;
 
-  const submitSearch = () => {
+  const submitSearch = (e) => {
+    e.preventDefault();
     if (searchCondition === 'First letter' && searchBarInput.length !== 1) {
       global.alert('Your search must have only 1 (one) character');
     } else if (searchBarInput.length < 1) {
@@ -29,7 +28,7 @@ function SearchBar({ dispatchMeals }) {
   };
 
   return (
-    <form>
+    <form onSubmit={ submitSearch }>
       <input
         data-testid="search-input"
         name="searchBarInput"
@@ -60,7 +59,6 @@ function SearchBar({ dispatchMeals }) {
           id="name"
           value="Name"
           onClick={ updateGenericState }
-          onChange={ () => setCondition(false) }
         />
       </label>
 
@@ -73,14 +71,12 @@ function SearchBar({ dispatchMeals }) {
           value="First letter"
           id="firstLetter"
           onClick={ updateGenericState }
-          onChange={ () => setCondition(false) }
         />
       </label>
 
       <button
         data-testid="exec-search-btn"
-        type="button"
-        onClick={ submitSearch }
+        type="submit"
       >
         Search
       </button>

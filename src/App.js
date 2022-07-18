@@ -12,11 +12,11 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/foods" component={ Foods } />
-      <Route path="/drinks" component={ Drinks } />
       <Route path="/drinks/:id" component={ RecipeDetails } />
       <Route path="/foods/:id" component={ RecipeDetails } />
       {/* <Route path="/drinks:id/in-progress" component={ DrinksInProgress } /> */}
+      <Route path="/foods" component={ Foods } />
+      <Route path="/drinks" component={ Drinks } />
       <Route path="/profile" component={ Profile } />
       {/* <Route path="/done-recipes" component={ DoneRecipes } /> */}
       {/* <Route path="/favorite-recipes" component={ FavoriteRecipes } /> */}
