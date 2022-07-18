@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
 import App from '../App';
-import renderWithRouterAndRedux from './Helpers/RenderWithRouter';
+import renderWithRouterAndRedux from './Helpers/RenderWithRouterAndRedux';
 import userEvent from '@testing-library/user-event'
 
 describe('Testing if the login page is working correctly', () => {
@@ -10,7 +10,7 @@ describe('Testing if the login page is working correctly', () => {
 
     const emailInputEl = screen.getByRole('textbox', { name: /email:/i });
     const submitBtnEl = screen.queryByRole('button', { name: /enter/i });
-    const passwordInputEl = screen.getByRole('textbox', { name: /password:/i });
+    const passwordInputEl = screen.getByLabelText(/password:/i);
     
     expect(submitBtnEl).toBeDisabled();
 

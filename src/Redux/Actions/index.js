@@ -22,9 +22,12 @@ export const mealsThunk = (searchBarInput, searchCondition, type) => {
       : `${urlDrinks}search.php?f=${searchBarInput}`;
     break;
   }
-  console.log(URL);
   return async (dispatch) => {
     let request = await fetch(URL).then((response) => response.json());
+    if (!request[key]) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      return;
+    }
     request = { [key]: request[key].slice(0, LIMIT) };
     dispatch(actSendMeals(request));
   };

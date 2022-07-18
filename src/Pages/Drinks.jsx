@@ -1,15 +1,22 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { mealsThunk } from '../Redux/Actions';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import RecipeCard from '../Components/RecipeCard';
 
 const Drinks = ({ drinks, dispatchMeals }) => {
+  const history = useHistory();
   useEffect(() => {
     dispatchMeals('', 'Name', '/drinks');
   }, [dispatchMeals]);
+
+  useEffect(() => {
+    if (drinks.length === 1) history.push(`/drinks/${drinks[0].idDrink}`);
+  }, [history, drinks]);
+
   return (
     <div>
       <Header renderButton title="Drinks" />
