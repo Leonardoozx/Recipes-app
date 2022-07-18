@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { mealsThunk } from '../Redux/Actions';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
@@ -16,12 +17,16 @@ const Drinks = ({ drinks, dispatchMeals }) => {
       <section className="recipes-container">
         {
           drinks.map((drink, index) => (
-            <RecipeCard
+            <Link
               key={ drink.idDrink }
-              id={ index }
-              thumb={ drink.strDrinkThumb }
-              name={ drink.strDrink }
-            />
+              to={ `/drinks/${drink.idDrink}/in-progress` }
+            >
+              <RecipeCard
+                id={ index }
+                thumb={ drink.strDrinkThumb }
+                name={ drink.strDrink }
+              />
+            </Link>
           ))
         }
       </section>
