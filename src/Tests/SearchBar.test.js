@@ -51,17 +51,14 @@ describe('Testing if the searchBar is working in the right way', () => {
 
   });
 
-  it('tests if the search button works when passing a valid string to input', async () => {
+  it('tests if the search button works when passing a valid string to the input', async () => {
     renderWithRouterAndRedux(<App />, {}, '/foods');
 
     userEvent.click(screen.getByAltText('search button img'));
 
     userEvent.click(screen.getByRole('radio', { name: /first letter/i }));
 
-    userEvent.type(
-      screen.getByRole('textbox'),
-      'l'
-    )
+    userEvent.type(screen.getByRole('textbox'),'l');
 
     userEvent.click(screen.getByText('Search'));
 

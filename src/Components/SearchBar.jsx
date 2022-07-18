@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -7,6 +7,7 @@ import { mealsThunk } from '../Redux/Actions';
 
 function SearchBar({ dispatchMeals }) {
   const history = useHistory();
+
   const initialState = {
     searchBarInput: '',
     searchCondition: 'Ingredient',
