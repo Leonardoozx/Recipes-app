@@ -10,7 +10,7 @@ describe('Testing if the login page is working correctly', () => {
 
     const emailInputEl = screen.getByRole('textbox', { name: /email:/i });
     const submitBtnEl = screen.queryByRole('button', { name: /enter/i });
-    const passwordInputEl = screen.getByLabelText(/password:/i);
+    const passwordInputEl = screen.getByTestId('password-input');
     
     expect(submitBtnEl).toBeDisabled();
 

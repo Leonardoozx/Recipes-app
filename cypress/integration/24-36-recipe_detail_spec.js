@@ -347,7 +347,7 @@ describe('31 - Redirecione a pessoa usuária caso o botão \"Start Recipe\" seja
   });
 });
 
-describe('32 - Implemente um botão de compartilhar e um de favoritar a receita', () => {
+describe.only('32 - Implemente um botão de compartilhar e um de favoritar a receita', () => {
   it('Verifica se os botões estão disponíveis na tela de detalhes de uma comida', () => {
     cy.visit('http://localhost:3000/foods/52771', {
       onBeforeLoad(win) {
@@ -371,7 +371,7 @@ describe('32 - Implemente um botão de compartilhar e um de favoritar a receita'
   });
 });
 
-describe('33 - Implemente a solução de forma que, ao clicar no botão de compartilhar, o link da receita dentro do app deve ser copiado para o clipboard e uma mensagem avisando que o link foi copiado deve aparecer', () => {
+describe.only('33 - Implemente a solução de forma que, ao clicar no botão de compartilhar, o link da receita dentro do app deve ser copiado para o clipboard e uma mensagem avisando que o link foi copiado deve aparecer', () => {
   it('Verifica a mensagem "Link copied!" e se o link da receita da comida foi copiado para o clipboard', () => {
     cy.visit('http://localhost:3000/foods/52771', {
       onBeforeLoad(win) {
@@ -401,7 +401,7 @@ describe('33 - Implemente a solução de forma que, ao clicar no botão de compa
   });
 });
 
-describe('34 - Salve as receitas favoritas no `localStorage` na chave `favoriteRecipes`', () => {
+describe.only('34 - Salve as receitas favoritas no `localStorage` na chave `favoriteRecipes`', () => {
   it('Verifica se após favoritar receita de uma comida, ela é salva corretamente no localStorage', () => {
     cy.visit('http://localhost:3000/foods/52771', {
       onBeforeLoad(win) {
@@ -453,7 +453,7 @@ describe('34 - Salve as receitas favoritas no `localStorage` na chave `favoriteR
   });
 });
 
-describe('35 - Implemente o ícone do coração (favorito) de modo que: deve vir preenchido caso a receita esteja favoritada e \"despreenchido\" caso contrário', () => {
+describe.only('35 - Implemente o ícone do coração (favorito) de modo que: deve vir preenchido caso a receita esteja favoritada e \"despreenchido\" caso contrário', () => {
   it('Verifica se a comida favoritada vem com o coração preenchido', () => {
     cy.visit('http://localhost:3000/foods/52771', {
       onBeforeLoad(win) {
@@ -523,7 +523,7 @@ describe('35 - Implemente o ícone do coração (favorito) de modo que: deve vir
   });
 });
 
-describe('36 - Implemente a lógica no botão de favoritar. Caso seja clicado, o ícone do coração deve mudar seu estado atual, caso esteja preenchido deve mudar para \"despreenchido\" e vice-versa', () => {
+describe.only('36 - Implemente a lógica no botão de favoritar. Caso seja clicado, o ícone do coração deve mudar seu estado atual, caso esteja preenchido deve mudar para \"despreenchido\" e vice-versa', () => {
   it('Favorita a comida', () => {
     cy.visit('http://localhost:3000/foods/52771', {
       onBeforeLoad(win) {

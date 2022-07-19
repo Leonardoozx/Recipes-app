@@ -14,9 +14,7 @@ function Foods({ meals, dispatchMeals }) {
     dispatchMeals('', 'Name', '/foods');
   }, [dispatchMeals]);
 
-  useEffect(() => {
-    if (meals.length === 1) history.push(`/foods/${meals[0].idMeal}`);
-  }, [history, meals]);
+ 
   return (
     <div>
       <Header renderButton title="Foods" />
