@@ -22,7 +22,6 @@ export const mealsThunk = (searchBarInput, searchCondition, type) => {
       : `${urlDrinks}search.php?f=${searchBarInput}`;
     break;
   }
-  console.log(URL);
   return async (dispatch) => {
     let request = await fetch(URL).then((response) => response.json());
     request = { [key]: request[key].slice(0, LIMIT) };
