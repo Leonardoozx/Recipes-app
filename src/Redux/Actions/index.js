@@ -32,3 +32,23 @@ export const mealsThunk = (searchBarInput, searchCondition, type) => {
     dispatch(actSendMeals(request));
   };
 };
+
+export const categoriesThunk = (category, type) => {
+  let URL = '';
+  const LIMIT = 12;
+  console.log(category, type);
+  switch (type) {
+  case 'meals':
+    URL = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+    break;
+  default:
+    URL = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+    break;
+  }
+  return async (dispatch) => {
+    let request = await fetch(URL).then((response) => response.json());
+    console.log(request);
+    request = { [type]: request[type].slice(0, LIMIT) };
+    dispatch(actSendMeals(request));
+  };
+};

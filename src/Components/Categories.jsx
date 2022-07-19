@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { categoriesThunk, mealsThunk } from '../Redux/Actions';
 
-const Categories = () => {
+const Categories = ({ filterByCategory, dispatchMeals }) => {
   const location = useLocation();
   const [categories, setCategories] = useState([]);
 
   const [type, setType] = useState(location.pathname === '/foods' ? 'meals' : 'drinks');
+
+  const selectFilterCategory = ({ target: { name } }) => {
+    filterByCategory(name, type);
+  };
 
   useEffect(() => {
     setType(location.pathname === '/foods' ? 'meals' : 'drinks');
@@ -25,17 +32,39 @@ const Categories = () => {
     <section className="category-container">
       {
         categories.map((recipe, index) => (
-          <span
+          <button
+            type="button"
+            name={ recipe.strCategory }
             data-testid={ `${recipe.strCategory}-category-filter` }
             key={ index }
             className="category-button"
+            onClick={ selectFilterCategory }
           >
             { recipe.strCategory }
-          </span>
+          </button>
         ))
       }
+      <button
+        type="button"
+        name="All"
+        data-testid="All-category-filter"
+        className="category-button"
+        onClick={ () => { dispatchMeals('', 'Name', location.pathname); } }
+      >
+        All
+      </button>
     </section>
   );
 };
 
-export default Categories;
+Categories.propTypes = {
+  filterByCategory: PropTypes.func.isRequired,
+  dispatchMeals: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  filterByCategory: (...params) => dispatch(categoriesThunk(...params)),
+  dispatchMeals: (...params) => dispatch(mealsThunk(...params)),
+});
+
+export default connect(null, mapDispatchToProps)(Categories);
