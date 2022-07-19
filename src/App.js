@@ -11,13 +11,13 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
+      <Route path="/drinks/:id" component={ RecipeDetails } />
+      <Route path="/foods/:id" component={ RecipeDetails } />
       <Route path="/foods" render={ () => <Recipes title="Foods" /> } />
       <Route path="/drinks" render={ () => <Recipes title="Drinks" /> } />
       {/* <Route path="/drink:id" component={ DrinkDetails } /> */}
       {/* <Route path="/foods:id" component={ FoodDetails } /> */}
       {/* <Route path="/drinks:id/in-progress" component={ DrinksInProgress } /> */}
-      <Route path="/drinks/:id" component={ RecipeDetails } />
-      <Route path="/foods/:id" component={ RecipeDetails } />
       {/* <Route path="/drinks:id/in-progress" component={ DrinksInProgress } /> */}
       <Route path="/profile" component={ Profile } />
       {/* <Route path="/done-recipes" component={ DoneRecipes } /> */}

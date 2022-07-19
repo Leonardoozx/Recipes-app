@@ -7,11 +7,17 @@ import { categoriesThunk, mealsThunk } from '../Redux/Actions';
 const Categories = ({ filterByCategory, dispatchMeals }) => {
   const location = useLocation();
   const [categories, setCategories] = useState([]);
-
+  const [activeCat, setActiveCat] = useState('');
   const [type, setType] = useState(location.pathname === '/foods' ? 'meals' : 'drinks');
 
   const selectFilterCategory = ({ target: { name } }) => {
-    filterByCategory(name, type);
+    if (name === activeCat) {
+      dispatchMeals('', 'Name', location.pathname);
+      setActiveCat('');
+    } else {
+      filterByCategory(name, type);
+      setActiveCat(name);
+    }
   };
 
   useEffect(() => {
