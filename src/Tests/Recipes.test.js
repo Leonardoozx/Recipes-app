@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouterAndRedux from './Helpers/RenderWithRouter';
+import renderWithRouterAndRedux from './Helpers/RenderWithRouterAndRedux';
 import Recipes from '../Pages/Recipes';
 
 describe('Testes da página Foods.js', () => {
