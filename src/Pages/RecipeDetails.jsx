@@ -26,19 +26,19 @@ function RecipeDetails() {
   }, [pathname, id]);
 
   // Referência: https://flexiple.com/javascript-capitalize-first-letter/
-  const captalizeTypes = (x) => {
-    const captalizedType = x.charAt(0).toUpperCase() + x.slice(1);
+  const captalizeTypes = (type, x) => {
+    const captalizedType = type.charAt(0).toUpperCase() + type.slice(1);
     const splitedType = captalizedType.split('');
     splitedType.pop();
-    return splitedType.join('');
+    const thumb = `str${splitedType.join('')}Thumb`;
+    const recipeName = x[`str${splitedType.join('')}`];
+    return { thumb, recipeName, type: splitedType.join('') };
   };
 
   return (
     <div>
       { recipe[recipeType]?.length > 0 && recipe[recipeType].map((x) => {
-        const type = captalizeTypes(recipeType);
-        const thumb = `str${type}Thumb`;
-        const recipeName = x[`str${type}`];
+        const { thumb, recipeName } = captalizeTypes(recipeType, x);
         return (
           <RecipeCard
             id={ +recipeName }
@@ -48,13 +48,16 @@ function RecipeDetails() {
           />);
       })}
 
-      {/* { recipe[recipeType]?.length > 0
-        && recipe[recipeType].map((x) => (
-          <RecipeInfo
-            type={ recipeType }
-            // key={ x[`str${splitedType.join('')}`] }
-          />
-        )) } */}
+      { recipe[recipeType]?.length > 0
+        && recipe[recipeType].map((x, y) => {
+          const { type } = captalizeTypes(recipeType, x);
+          console.log(type);
+          // return (
+          //   <RecipeInfo
+          //     key={ y }
+          //   />
+          // );
+        }) }
     </div>
   );
 }
