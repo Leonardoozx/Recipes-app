@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import RecipeCard from '../Components/RecipeCard';
+import RecipeInfo from '../Components/RecipeInfo';
 
 function RecipeDetails() {
   // Referência: https://stackoverflow.com/questions/68892625/how-to-use-props-match-params
@@ -12,6 +13,8 @@ function RecipeDetails() {
   const mealUrl = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 
+  const recipeType = pathname.split('/')[1];
+
   useEffect(() => {
     const [type] = pathname.split(/\/[0-9]/);
     const URL = type === '/foods' ? `${mealUrl}${id}` : `${drinkUrl}${id}`;
@@ -22,16 +25,36 @@ function RecipeDetails() {
     fetchRecipe();
   }, [pathname, id]);
 
+  // Referência: https://flexiple.com/javascript-capitalize-first-letter/
+  const captalizeTypes = (x) => {
+    const captalizedType = x.charAt(0).toUpperCase() + x.slice(1);
+    const splitedType = captalizedType.split('');
+    splitedType.pop();
+    return splitedType.join('');
+  };
+
   return (
     <div>
-      { recipe.meals?.length > 0 && recipe.meals.map((x) => (
-        <RecipeCard
-          id={ +x.idMeal }
-          key={ x.idMeal }
-          thumb={ x.strMealThumb }
-          name={ x.strMeal }
-        />
-      )) }
+      { recipe[recipeType]?.length > 0 && recipe[recipeType].map((x) => {
+        const type = captalizeTypes(recipeType);
+        const thumb = `str${type}Thumb`;
+        const recipeName = x[`str${type}`];
+        return (
+          <RecipeCard
+            id={ +recipeName }
+            key={ recipeName }
+            thumb={ x[thumb] }
+            name={ recipeName }
+          />);
+      })}
+
+      {/* { recipe[recipeType]?.length > 0
+        && recipe[recipeType].map((x) => (
+          <RecipeInfo
+            type={ recipeType }
+            // key={ x[`str${splitedType.join('')}`] }
+          />
+        )) } */}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { mealsThunk } from '../Redux/Actions';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
