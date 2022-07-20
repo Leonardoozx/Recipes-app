@@ -10,22 +10,20 @@ function RecipeInProgress() {
   const mealUrl = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
   const [type] = pathname.split(/\/[0-9]/);
-  const recipeType = pathname.includes('food') ? 'Meals' : 'Drinks';
+  const recipeType = pathname.includes('drink') ? 'Drinks' : 'Meals';
   useEffect(() => {
     const URL = type === '/foods'
-      ? `${mealUrl}${Object.values(params)[0]}`
-      : `${drinkUrl}${Object.values(params)[0]}`;
+      ? `${mealUrl}${params.foodId}`
+      : `${drinkUrl}${params.drinkId}`;
+    console.log(pathname);
     const fetchRecipe = async () => {
       const request = await fetch(URL).then((response) => response.json());
       setRecipe(request);
     };
     fetchRecipe();
   }, []);
-  console.log(recipe);
   return (
-    <>
-      {pathname.includes('food') ? <h1>Meal in Progress</h1>
-        : <h1>Drink In Progress</h1>}
+    <div>
       { recipe[recipeType.toLowerCase()]
       && <RecipeInfo
         recipe={ recipe[recipeType.toLowerCase()][0] }
@@ -33,7 +31,7 @@ function RecipeInProgress() {
         checkbox
         type={ recipeType }
       />}
-    </>
+    </div>
   );
 }
 

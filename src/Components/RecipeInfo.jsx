@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ShareBtns from './ShareBtns';
 
 function RecipeInfo(props) {
   const [doneIngredients, setIngredient] = useState([]);
@@ -56,9 +57,18 @@ function RecipeInfo(props) {
         alt={ `${recipeType}` }
         className="recipe-card img"
       />
-      <button type="button" data-testid="share-btn">Share</button>
-      <button type="button" data-testid="favorite-btn">Favorite</button>
-      <h4 data-testid="recipe-category">{recipe.strCategory}</h4>
+      <ShareBtns
+        image={ recipe[`str${recipeType}Thumb`] }
+        name={ recipe[`str${recipeType}`] }
+        id={ recipe[`id${recipeType}`] }
+        alcoholicOrNot={ recipeType.toLowerCase() === 'drink' ? recipe.strAlcoholic : '' }
+        category={ recipe.strCategory }
+        type={ recipeType === 'Meal' ? 'food' : 'drink' }
+        nationality={ recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea }
+      />
+      <h4 data-testid="recipe-category">
+        {recipeType === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
+      </h4>
       {Object.keys(recipe).map((key) => {
         if (key.includes('strIngredient') && recipe[key]) {
           index += 1;
@@ -70,10 +80,8 @@ function RecipeInfo(props) {
                   ? (
                     <input
                       id={ key }
-                      style={ { backgroundColor: 'red' } }
                       type="checkbox"
                       onChange={ ({ target }) => saveIngredient(target) }
-                      onClick={ ({ target }) => console.log(target) }
                       defaultChecked
                     />)
                   : (

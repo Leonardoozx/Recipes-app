@@ -7,6 +7,7 @@ import { mealsThunk } from '../Redux/Actions';
 
 function SearchBar({ dispatchMeals }) {
   const history = useHistory();
+
   const initialState = {
     searchBarInput: '',
     searchCondition: 'Ingredient',
@@ -16,7 +17,8 @@ function SearchBar({ dispatchMeals }) {
 
   const { searchBarInput, searchCondition } = genericState;
 
-  const submitSearch = () => {
+  const submitSearch = (e) => {
+    e.preventDefault();
     if (searchCondition === 'First letter' && searchBarInput.length !== 1) {
       global.alert('Your search must have only 1 (one) character');
     } else if (searchBarInput.length < 1) {
@@ -27,7 +29,7 @@ function SearchBar({ dispatchMeals }) {
   };
 
   return (
-    <form>
+    <form onSubmit={ submitSearch }>
       <input
         data-testid="search-input"
         name="searchBarInput"
@@ -75,8 +77,7 @@ function SearchBar({ dispatchMeals }) {
 
       <button
         data-testid="exec-search-btn"
-        type="button"
-        onClick={ submitSearch }
+        type="submit"
       >
         Search
       </button>
