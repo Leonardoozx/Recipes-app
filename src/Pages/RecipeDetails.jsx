@@ -46,7 +46,6 @@ function RecipeDetails() {
             && measurement !== '' ? measurement : ''))
             .filter((a) => a !== '' && a !== ' ');
           const storageType = pathname.includes('food') ? 'food' : 'drink';
-          console.log(x);
           return (
             <div key={ y }>
               <img

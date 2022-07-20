@@ -1,6 +1,8 @@
 import copy from 'clipboard-copy';
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import buttonImg from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
@@ -24,7 +26,6 @@ function ShareBtns(props) {
 
   const isRecipeSaved = (id) => {
     const storage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    console.log(storage.some((x) => x.id === id));
     return storage.some((x) => x.id === id);
   };
 
@@ -59,5 +60,9 @@ function ShareBtns(props) {
     </>
   );
 }
+
+ShareBtns.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default ShareBtns;
