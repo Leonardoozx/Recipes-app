@@ -61,6 +61,7 @@ function RecipeDetailsInfo({ x, y }) {
         category={ x.strCategory }
         type={ storageType }
         nationality={ storageType === 'drink' ? '' : x.strArea }
+        favoriteBtn
       />
 
       <h1 data-testid="recipe-title">{recipeName}</h1>

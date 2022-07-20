@@ -29,7 +29,7 @@ function ShareBtns(props) {
     return storage.some((x) => x.id === id);
   };
 
-  const { id } = props;
+  const { id, favoriteBtn } = props;
 
   return (
     <>
@@ -46,23 +46,27 @@ function ShareBtns(props) {
         <img src={ buttonImg } alt="button img" />
       </button>
 
-      <button
-        type="button"
-        onClick={ () => onFavoriteBtnClick(id) }
-      >
-        <img
-          data-testid="favorite-btn"
-          key={ imageKey }
-          src={ isRecipeSaved(id) ? blackHeart : whiteHeart }
-          alt=""
-        />
-      </button>
+      { favoriteBtn
+      && (
+        <button
+          type="button"
+          onClick={ () => onFavoriteBtnClick(id) }
+        >
+          <img
+            data-testid="favorite-btn"
+            key={ imageKey }
+            src={ isRecipeSaved(id) ? blackHeart : whiteHeart }
+            alt=""
+          />
+        </button>
+      )}
     </>
   );
 }
 
 ShareBtns.propTypes = {
   id: PropTypes.string.isRequired,
+  favoriteBtn: PropTypes.bool.isRequired,
 };
 
 export default ShareBtns;
