@@ -16,7 +16,6 @@ function RecipeInProgress() {
     const URL = type === '/foods'
       ? `${mealUrl}${Object.values(params)[0]}`
       : `${drinkUrl}${Object.values(params)[0]}`;
-    console.log(URL);
     const fetchRecipe = async () => {
       const request = await fetch(URL).then((response) => response.json());
       setRecipe(request);
