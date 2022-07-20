@@ -93,14 +93,19 @@ function RecipeDetails() {
             </div>
           );
         }) }
-      {/* { recipe[recipeType]?.length > 0
+      { recipe.meals
          && (
+      // Referências:
+      // como usar iFrame (eu tava completamente perdido): https://dequeuniversity.com/rules/axe/4.3/video-caption
+      // o que fazia o dar a mensagem 'www.youtube.com refused to connect' e como solucionar: https://forum.freecodecamp.org/t/youtube-refused-to-connect/245262
            <iframe
-             src="https://www.youtube.com/watch?v=C5J39YnnPsg"
+             data-testid="video"
+             src={ recipe.meals[0].strYoutube.replace('watch?v=', '/embed/') }
              title="YouTube video player"
+             frameBorder="0"
              allowFullScreen
            />
-         )} */}
+         )}
     </div>
   );
 }
