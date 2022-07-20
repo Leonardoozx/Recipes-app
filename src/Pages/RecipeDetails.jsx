@@ -54,7 +54,7 @@ function RecipeDetails() {
                 <button
                   key={ startBtnKey }
                   data-testid="start-recipe-btn"
-                  id="start-recipe-btn"
+                  className="start-recipe-btn"
                   type="button"
                   name={
                     recipe[recipeType][0][`id${pathname.includes('foods')
