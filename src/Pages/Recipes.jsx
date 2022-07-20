@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { connect } from 'react-redux';
 import { mealsThunk } from '../Redux/Actions';
@@ -9,6 +10,7 @@ import RecipeCard from '../Components/RecipeCard';
 import Categories from '../Components/Categories';
 
 function Recipes({ recipes, dispatchMeals, title }) {
+  const history = useHistory();
   const location = useLocation();
   const [type, setType] = useState('meals');
 
@@ -17,6 +19,17 @@ function Recipes({ recipes, dispatchMeals, title }) {
     setType(newType);
     dispatchMeals('', 'Name', location.pathname);
   }, [location, dispatchMeals]);
+
+  useEffect(() => {
+    const captalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+    const splitedType = captalizedType.split('');
+    splitedType.pop();
+    const newType = splitedType.join('');
+    const nextLocationType = type === 'meals' ? 'foods' : 'drinks';
+    if (recipes[type].length === 1) {
+      history.push(`/${nextLocationType}/${recipes[type][0][`id${newType}`]}`);
+    }
+  }, [history, recipes, type]);
   return (
     <div>
       <Header renderButton title={ title } />
