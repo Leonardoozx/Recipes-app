@@ -65,6 +65,7 @@ function RecipeDetails() {
           const storageType = pathname.includes('food') ? 'food' : 'drink';
           return (
             <div key={ y }>
+              <RecipeDetailsInfo />
               <img
                 data-testid="recipe-photo"
                 src={ x[thumb] }
@@ -134,9 +135,6 @@ function RecipeDetails() {
                     })
                   )
                   : (
-                    // <div>
-                    //   comidas
-                    // </div>
                     recommendation.map((rec, recIndex) => {
                       const {
                         recipeName: mealName,
