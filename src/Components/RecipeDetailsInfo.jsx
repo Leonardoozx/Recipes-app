@@ -23,8 +23,7 @@ function RecipeDetailsInfo({ x, y }) {
     recomendationFetch();
   }, [pathname]);
 
-  let index = 0;
-
+  // Referência: https://flexiple.com/javascript-capitalize-first-letter/
   const captalizeTypes = (type, recipe) => {
     const captalizedType = type.charAt(0).toUpperCase() + type.slice(1);
     const splitedType = captalizedType.split('');
@@ -44,6 +43,7 @@ function RecipeDetailsInfo({ x, y }) {
     isMeasurement.includes('strMeasure') && measurement !== '' ? measurement : ''))
     .filter((a) => a !== '' && a !== ' ');
 
+  let index = 0;
   return (
     <div key={ y }>
       <img
@@ -142,6 +142,7 @@ function RecipeDetailsInfo({ x, y }) {
 
 RecipeDetailsInfo.propTypes = {
   x: PropTypes.objectOf(PropTypes.string).isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 export default RecipeDetailsInfo;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import RecipeDetailsInfo from '../Components/RecipeDetailsInfo';
-import '../CSS/recommendation.css';
+import '../CSS/recipeDetails.css';
 
 function RecipeDetails() {
   // Referência: https://stackoverflow.com/questions/68892625/how-to-use-props-match-params
@@ -20,24 +20,6 @@ function RecipeDetails() {
     };
     fetchRecipe();
   }, [pathname, id]);
-
-  // Recommendation card
-  // useEffect(() => {
-  //   const drinksUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-  //   const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  //   const [type] = pathname.split(/\/[0-9]/);
-  //   const recommendationType = type.includes('foods') ? 'drinks' : 'meals';
-  //   const URL = type !== '/foods' ? mealsUrl : drinksUrl;
-
-  //   const recomendationFetch = async () => {
-  //     const request = await fetch(URL).then((x) => x.json());
-  //     const RECOMMENDATION_LIMIT = 6;
-  //     setRecommendation(request[recommendationType].slice(0, RECOMMENDATION_LIMIT));
-  //   };
-  //   recomendationFetch();
-  // }, [id, pathname]);
-
-  // Referência: https://flexiple.com/javascript-capitalize-first-letter/
 
   const recipeType = pathname.includes('food') ? 'meals' : 'drinks';
 
@@ -59,6 +41,7 @@ function RecipeDetails() {
              allowFullScreen
            />
          )}
+      <button id="start-recipe-btn" type="button">Start Recipe</button>
     </div>
   );
 }
