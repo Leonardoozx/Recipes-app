@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import RecipeDetailsInfo from '../Components/RecipeDetailsInfo';
-import '../CSS/recipeDetails.css';
 
 function RecipeDetails() {
   // Referência: https://stackoverflow.com/questions/68892625/how-to-use-props-match-params
   const { id } = useParams();
   const history = useHistory();
   const { location: { pathname } } = history;
+
   const [recipe, setRecipe] = useState([]);
   const [startBtnKey, setStartBtnKey] = useState(0);
 
+  const mealUrl = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+  const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+
   useEffect(() => {
-    const mealUrl = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
-    const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
     const [type] = pathname.split(/\/[0-9]/);
     const URL = type === '/foods' ? `${mealUrl}${id}` : `${drinkUrl}${id}`;
     const fetchRecipe = async () => {
@@ -34,7 +35,7 @@ function RecipeDetails() {
       setStartBtnKey((x) => x + 1);
       return;
     }
-    // history.push(`${pathname}/in-progress`);
+    history.push(`${pathname}/in-progress`);
     console.log(name);
     setStartBtnKey((x) => x + 1);
     localStorage.setItem('startedRecipes', JSON.stringify([...startedRecipes, name]));
@@ -61,7 +62,10 @@ function RecipeDetails() {
                   }
                   onClick={ onStartRecipeBtnClick }
                 >
-                  {/* { recipesInProgress.some((reci) => reci.id === ) } */}
+                  { recipesInProgress.some((reci) => (
+                    reci.strIngredient1 === x[`id${pathname.includes('foods')
+                      ? 'Meal' : 'Drink'}`].strIngredient1))
+                    ? 'Continue Recipe' : 'Start Recipe' }
                 </button>)
             }
           </div>)) }

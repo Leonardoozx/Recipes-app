@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ShareBtns from './ShareBtns';
+import '../CSS/recipeDetails.css';
 
 function RecipeDetailsInfo({ x, y }) {
   const { location: { pathname } } = useHistory();

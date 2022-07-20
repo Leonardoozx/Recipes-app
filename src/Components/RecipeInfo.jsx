@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function RecipeInfo(props) {
-  console.log(props);
   const { type, recipe, finishButton } = props;
   const recipeType1 = type.split('');
   recipeType1.pop();
@@ -20,22 +19,21 @@ function RecipeInfo(props) {
       <h4 data-testid="recipe-category">{recipe.strCategory}</h4>
       {Object.keys(recipe).map((key, index) => (
         key.includes('strIngredient') && recipe[key] && (
-          <p data-testid={ `${index}-ingredient-step` }>{recipe[key]}</p>
+          <p key={ index } data-testid={ `${index}-ingredient-step` }>{recipe[key]}</p>
         )
       ))}
       <article data-testid="instructions">
         {recipe.strInstructions}
       </article>
-      {/* {recomendations && } */}
       {finishButton
-      && <button type="button" data-testid="finish-recipe-btn"> Finalizar</button>}
+      && <button type="button" data-testid="finish-recipe-btn">Finalizar</button>}
     </main>
   );
 }
 
 RecipeInfo.propTypes = {
   type: PropTypes.string.isRequired,
-  recipe: PropTypes.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.string).isRequired,
   finishButton: PropTypes.bool.isRequired,
 };
 

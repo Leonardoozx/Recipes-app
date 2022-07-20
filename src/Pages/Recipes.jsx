@@ -38,7 +38,8 @@ function Recipes({ recipes, dispatchMeals, title }) {
           recipes[type].map((recipe, index) => (
             <RecipeCard
               key={ recipe.idMeal || recipe.idDrink }
-              id={ index }
+              idRecipe={ recipe.idMeal || recipe.idDrink }
+              idCard={ index }
               thumb={ recipe.strMealThumb || recipe.strDrinkThumb }
               name={ recipe.strMeal || recipe.strDrink }
             />
