@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import ShareBtns from '../Components/ShareBtns';
+import '../CSS/recommendation.css';
 
 function RecipeDetails() {
   // Referência: https://stackoverflow.com/questions/68892625/how-to-use-props-match-params
@@ -9,11 +10,11 @@ function RecipeDetails() {
   let index = 0;
 
   const [recipe, setRecipe] = useState([]);
-
-  const mealUrl = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
-  const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
+  const [recommendation, setRecommendation] = useState([]);
 
   useEffect(() => {
+    const mealUrl = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
+    const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
     const [type] = pathname.split(/\/[0-9]/);
     const URL = type === '/foods' ? `${mealUrl}${id}` : `${drinkUrl}${id}`;
     const fetchRecipe = async () => {
@@ -22,6 +23,22 @@ function RecipeDetails() {
     };
     fetchRecipe();
   }, [pathname, id]);
+
+  // Recommendation card
+  useEffect(() => {
+    const drinksUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    const mealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    const [type] = pathname.split(/\/[0-9]/);
+    const recommendationType = type.includes('foods') ? 'drinks' : 'meals';
+    const URL = type !== '/foods' ? mealsUrl : drinksUrl;
+
+    const recomendationFetch = async () => {
+      const request = await fetch(URL).then((x) => x.json());
+      const RECOMMENDATION_LIMIT = 6;
+      setRecommendation(request[recommendationType].slice(0, RECOMMENDATION_LIMIT));
+    };
+    recomendationFetch();
+  }, [id, pathname]);
 
   // Referência: https://flexiple.com/javascript-capitalize-first-letter/
   const captalizeTypes = (type, x) => {
@@ -66,7 +83,9 @@ function RecipeDetails() {
               />
 
               <h1 data-testid="recipe-title">{recipeName}</h1>
-              <p data-testid="recipe-category">{x.strCategory}</p>
+              <p data-testid="recipe-category">
+                { x.idMeal ? x.strCategory : 'Alcoholic' }
+              </p>
               <div>
                 { recipeEntries.map(([isIngredient, ingredient]) => {
                   if (isIngredient.includes('strIngredient') && ingredient) {
@@ -79,16 +98,68 @@ function RecipeDetails() {
                         key={ isIngredient }
                       >
                         {`${ingredient} - ${measureUnitsArr[index - 1]}`}
-
                       </p>));
                 })}
               </div>
-              <div>
-                { recipe[recipeType]?.length > 0
-                && (
-                  <p data-testid="instructions">
-                    {recipe[recipeType][0].strInstructions}
-                  </p>)}
+              <p data-testid="instructions">{x.strInstructions}</p>
+
+              <div className="recommendation">
+
+                { x.idMeal
+                  ? (
+                  // <div>
+                  //   bebidas
+                  // </div>
+                    recommendation.map((rec, recIndex) => {
+                      const {
+                        recipeName: drinkName,
+                        thumb: drinkThumb,
+                        type: drinkType } = captalizeTypes('drinks', rec);
+                      return (
+                        <div
+                          data-testid={ `${recIndex}-recomendation-card` }
+                          key={ rec[`id${drinkType}`] }
+                          className="recommendation-content"
+                        >
+                          <img
+                            style={ { width: '120px' } }
+                            src={ rec[drinkThumb] }
+                            alt=""
+                          />
+                          <p data-testid={ `${recIndex}-recomendation-title` }>
+                            {drinkName}
+                          </p>
+                        </div>
+                      );
+                    })
+                  )
+                  : (
+                    // <div>
+                    //   comidas
+                    // </div>
+                    recommendation.map((rec, recIndex) => {
+                      const {
+                        recipeName: mealName,
+                        thumb: mealThumb,
+                        type: mealType } = captalizeTypes('meals', rec);
+                      return (
+                        <div
+                          data-testid={ `${recIndex}-recomendation-card` }
+                          className="recommendation-content"
+                          key={ rec[`id${mealType}`] }
+                        >
+                          <img
+                            style={ { width: '120px' } }
+                            src={ rec[mealThumb] }
+                            alt=""
+                          />
+                          <p data-testid={ `${recIndex}-recomendation-title` }>
+                            {mealName}
+                          </p>
+                        </div>
+                      );
+                    })
+                  )}
               </div>
             </div>
           );

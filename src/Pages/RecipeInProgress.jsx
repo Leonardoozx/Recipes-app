@@ -22,7 +22,7 @@ function RecipeInProgress() {
       setRecipe(request);
     };
     fetchRecipe();
-  }, []);
+  }, [params, type]);
 
   return (
     <>

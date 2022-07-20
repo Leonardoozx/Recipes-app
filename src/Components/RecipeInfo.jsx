@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function RecipeInfo(props) {
   console.log(props);
-  const { type, recipe, finishButton, recomendations, video } = props;
+  const { type, recipe, finishButton } = props;
   const recipeType1 = type.split('');
   recipeType1.pop();
   const recipeType = recipeType1.join('');
@@ -37,13 +37,6 @@ RecipeInfo.propTypes = {
   type: PropTypes.string.isRequired,
   recipe: PropTypes.isRequired,
   finishButton: PropTypes.bool.isRequired,
-  recomendations: PropTypes.bool,
-  video: PropTypes.bool,
-};
-
-RecipeInfo.defaultProps = {
-  recomendations: false,
-  video: false,
 };
 
 export default RecipeInfo;
