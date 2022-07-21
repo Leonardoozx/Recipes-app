@@ -22,15 +22,20 @@ function RecipeDetails() {
       setRecipe(request);
     };
     fetchRecipe();
+    return (setRecipe([]));
   }, [pathname, id]);
 
   const recipeType = pathname.includes('food') ? 'meals' : 'drinks';
 
   const startedRecipes = JSON.parse(localStorage.getItem('startedRecipes')) || [];
 
-  const recipesInProgress = JSON.parse(localStorage.getItem('recipesInProgress')) || [];
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
 
   const onStartRecipeBtnClick = ({ target: { name } }) => {
+    if (inProgressRecipes.some((x) => x === name)) {
+      history.push(`${pathname}/in-progress`);
+      return;
+    }
     if (startedRecipes.some((x) => x === name)) {
       setStartBtnKey((x) => x + 1);
       return;
@@ -38,37 +43,45 @@ function RecipeDetails() {
     history.push(`${pathname}/in-progress`);
     console.log(name);
     setStartBtnKey((x) => x + 1);
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify([...inProgressRecipes, name]));
     localStorage.setItem('startedRecipes', JSON.stringify([...startedRecipes, name]));
   };
 
   return (
     <div>
       { recipe[recipeType]?.length > 0
-        && recipe[recipeType].map((x, y) => (
-          <div key={ y }>
-            <RecipeDetailsInfo x={ x } y={ y } />
-            {
-              !startedRecipes.some((name) => name === x[`id${pathname.includes('foods')
-                ? 'Meal' : 'Drink'}`])
-              && (
-                <button
-                  key={ startBtnKey }
-                  data-testid="start-recipe-btn"
-                  className="start-recipe-btn"
-                  type="button"
-                  name={
-                    recipe[recipeType][0][`id${pathname.includes('foods')
-                      ? 'Meal' : 'Drink'}`]
-                  }
-                  onClick={ onStartRecipeBtnClick }
-                >
-                  { recipesInProgress.some((reci) => (
-                    reci.strIngredient1 === x[`id${pathname.includes('foods')
-                      ? 'Meal' : 'Drink'}`].strIngredient1))
-                    ? 'Continue Recipe' : 'Start Recipe' }
-                </button>)
-            }
-          </div>)) }
+        && recipe[recipeType].map((x, y) => {
+          const progressRecipe = inProgressRecipes.some((proReci) => (
+            proReci === x[`id${pathname.includes('foods')
+              ? 'Meal' : 'Drink'}`]));
+          return (
+
+            <div key={ y }>
+              <RecipeDetailsInfo x={ x } y={ y } />
+              {
+                (!startedRecipes.some((name) => name === x[`id${pathname.includes('foods')
+                  ? 'Meal' : 'Drink'}`]) || progressRecipe)
+                && (
+                  <button
+                    data-testid="start-recipe-btn"
+                    key={ startBtnKey }
+                    className="start-recipe-btn"
+                    type="button"
+                    name={
+                      recipe[recipeType][0][`id${pathname.includes('foods')
+                        ? 'Meal' : 'Drink'}`]
+                    }
+                    onClick={ onStartRecipeBtnClick }
+                  >
+                    { inProgressRecipes.some((reci) => (
+                      reci === x[`id${pathname.includes('foods') ? 'Meal' : 'Drink'}`]))
+                      ? 'Continue Recipe' : 'Start Recipe' }
+                  </button>)
+              }
+            </div>
+          );
+        }) }
       { recipe.meals
          && (
       // Referências:
