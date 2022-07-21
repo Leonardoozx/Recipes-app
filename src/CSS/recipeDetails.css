@@ -1,0 +1,20 @@
+.recommendation {
+  display: flex;
+  flex-direction: row;
+  max-width: 320px;
+  overflow-y: scroll;
+  text-align: center;
+}
+
+.recommendation-content {
+  margin: 20px;
+}
+
+.start-recipe-btn {
+  bottom: 0;
+  left: 0;
+  padding: 15px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}

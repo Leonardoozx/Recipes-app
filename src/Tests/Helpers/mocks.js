@@ -120,6 +120,32 @@ export const favoriteDrink = {
     "nationality": ""
 };
 
+export const doneDrinkMock = {
+    "image": "https://www.thecocktaildb.com/images/media/drink/yt9i7n1504370388.jpg",
+    "name": "Kir Royale",
+    "id": "13837",
+    "alcoholicOrNot": "Alcoholic",
+    "category": "Ordinary Drink",
+    "type": "drink",
+    "nationality": "",
+    "tags": "",
+    "doneDate": new Date().toLocaleDateString(),
+};
+
+export const doneMealMock = {
+        "image": "https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg",
+        "name": "Burek",
+        "id": "53060",
+        "alcoholicOrNot": "",
+        "category": "Side",
+        "type": "food",
+        "nationality": "Croatian",
+        "tags": [
+            "Streetfood",
+            " Onthego"
+        ],
+        "doneDate": new Date().toLocaleDateString(),
+};
 
 export const mockDrinkFetch = () => {
     jest.spyOn(global, 'fetch')

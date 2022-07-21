@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { connect } from 'react-redux';
 import { mealsThunk } from '../Redux/Actions';
 import Footer from '../Components/Footer';

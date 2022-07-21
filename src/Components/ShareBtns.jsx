@@ -6,15 +6,17 @@ import buttonImg from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
-function ShareBtns(props) {
+function ShareBtns({
+  alcoholicOrNot, category, id, image, name, nationality, type, favoriteBtn }) {
+  const props = { alcoholicOrNot, category, id, image, name, nationality, type };
   const { pathname } = useLocation();
   const [willAppearText, appearText] = useState(false);
   const [imageKey, setImageKey] = useState(0);
 
-  const onFavoriteBtnClick = (id) => {
+  const onFavoriteBtnClick = (ID) => {
     const storage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    if (storage.some((x) => x.id === id)) {
-      const newStorage = storage.filter((x) => x.id !== id);
+    if (storage.some((x) => x.id === ID)) {
+      const newStorage = storage.filter((x) => x.id !== ID);
       localStorage.setItem('favoriteRecipes', JSON.stringify(newStorage));
       setImageKey((prevState) => prevState + 1);
       return;
@@ -23,12 +25,10 @@ function ShareBtns(props) {
     setImageKey((prevState) => prevState + 1);
   };
 
-  const isRecipeSaved = (id) => {
+  const isRecipeSaved = (ID) => {
     const storage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    return storage.some((x) => x.id === id);
+    return storage.some((x) => x.id === ID);
   };
-
-  const { id } = props;
 
   return (
     <>
@@ -38,6 +38,7 @@ function ShareBtns(props) {
         data-testid="share-btn"
         type="button"
         onClick={ () => {
+          copy(`http://localhost:3000${pathname}`);
           copy(`http://localhost:3000${pathname.replace('/in-progress', '')}`);
           appearText(true);
         } }
@@ -45,23 +46,33 @@ function ShareBtns(props) {
         <img src={ buttonImg } alt="button img" />
       </button>
 
-      <button
-        type="button"
-        onClick={ () => onFavoriteBtnClick(id) }
-      >
-        <img
-          data-testid="favorite-btn"
-          key={ imageKey }
-          src={ isRecipeSaved(id) ? blackHeart : whiteHeart }
-          alt=""
-        />
-      </button>
+      { favoriteBtn
+      && (
+        <button
+          type="button"
+          onClick={ () => onFavoriteBtnClick(id) }
+        >
+          <img
+            data-testid="favorite-btn"
+            key={ imageKey }
+            src={ isRecipeSaved(id) ? blackHeart : whiteHeart }
+            alt=""
+          />
+        </button>
+      )}
     </>
   );
 }
 
 ShareBtns.propTypes = {
   id: PropTypes.string.isRequired,
+  favoriteBtn: PropTypes.bool.isRequired,
+  alcoholicOrNot: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  nationality: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default ShareBtns;

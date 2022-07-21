@@ -15,13 +15,12 @@ function RecipeInProgress() {
     const URL = type === '/foods'
       ? `${mealUrl}${params.foodId}`
       : `${drinkUrl}${params.drinkId}`;
-    console.log(pathname);
     const fetchRecipe = async () => {
       const request = await fetch(URL).then((response) => response.json());
       setRecipe(request);
     };
     fetchRecipe();
-  }, []);
+  }, [params.drinkId, params.foodId, type]);
   return (
     <div>
       { recipe[recipeType.toLowerCase()]

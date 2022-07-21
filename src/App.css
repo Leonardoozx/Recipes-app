@@ -106,3 +106,8 @@ footer {
   margin: 5px;
   padding: 5px;
 }
+
+body {
+  min-height: 100vh;
+  padding: 0;
+}
