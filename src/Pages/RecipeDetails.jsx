@@ -29,22 +29,15 @@ function RecipeDetails() {
 
   const startedRecipes = JSON.parse(localStorage.getItem('startedRecipes')) || [];
 
-  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+  // const
 
   const onStartRecipeBtnClick = ({ target: { name } }) => {
-    if (inProgressRecipes.some((x) => x === name)) {
-      history.push(`${pathname}/in-progress`);
-      return;
-    }
     if (startedRecipes.some((x) => x === name)) {
       setStartBtnKey((x) => x + 1);
       return;
     }
     history.push(`${pathname}/in-progress`);
-    console.log(name);
     setStartBtnKey((x) => x + 1);
-    localStorage.setItem('inProgressRecipes',
-      JSON.stringify([...inProgressRecipes, name]));
     localStorage.setItem('startedRecipes', JSON.stringify([...startedRecipes, name]));
   };
 
@@ -52,16 +45,13 @@ function RecipeDetails() {
     <div>
       { recipe[recipeType]?.length > 0
         && recipe[recipeType].map((x, y) => {
-          const progressRecipe = inProgressRecipes.some((proReci) => (
-            proReci === x[`id${pathname.includes('foods')
-              ? 'Meal' : 'Drink'}`]));
+          console.log('funciona');
           return (
-
             <div key={ y }>
               <RecipeDetailsInfo x={ x } y={ y } />
               {
-                (!startedRecipes.some((name) => name === x[`id${pathname.includes('foods')
-                  ? 'Meal' : 'Drink'}`]) || progressRecipe)
+                !startedRecipes.some((name) => name === x[`id${pathname.includes('foods')
+                  ? 'Meal' : 'Drink'}`])
                 && (
                   <button
                     data-testid="start-recipe-btn"
@@ -74,9 +64,7 @@ function RecipeDetails() {
                     }
                     onClick={ onStartRecipeBtnClick }
                   >
-                    { inProgressRecipes.some((reci) => (
-                      reci === x[`id${pathname.includes('foods') ? 'Meal' : 'Drink'}`]))
-                      ? 'Continue Recipe' : 'Start Recipe' }
+                    Start Recipe
                   </button>)
               }
             </div>

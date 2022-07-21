@@ -20,7 +20,7 @@ function RecipeInProgress() {
       setRecipe(request);
     };
     fetchRecipe();
-  }, [params.drinkId, params.foodId, pathname, type]);
+  }, [params.drinkId, params.foodId, type]);
   return (
     <div>
       { recipe[recipeType.toLowerCase()]
