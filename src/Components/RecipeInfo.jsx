@@ -1,20 +1,17 @@
-/**
- * It renders a recipe's information, including its ingredients, instructions and a button to finish
- * the recipe
- * @returns a JSX element.
- */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ShareBtns from './ShareBtns';
 
 function RecipeInfo(props) {
+  const { location: { pathname } } = useHistory();
   const [doneIngredients, setIngredient] = useState([]);
   const [buttonDisabled, changeButtonStatus] = useState(true);
   const { type, recipe, finishButton } = props;
-  const recipeTypePlural = type.toLowerCase();
   const recipeType = type.replace('s', '');
   const recipeId = recipe[`id${recipeType}`];
+  const recipeTypePlural = pathname.includes('food') ? 'meals' : 'cocktails';
+
   useEffect(() => {
     function resumeRecipe() {
       const savedIngredients = JSON.parse(

@@ -29,9 +29,17 @@ function RecipeDetails() {
 
   const startedRecipes = JSON.parse(localStorage.getItem('startedRecipes')) || [];
 
-  // const
-
+  const storageRecipeType = pathname.includes('food') ? 'meals' : 'cocktails';
   const onStartRecipeBtnClick = ({ target: { name } }) => {
+    const inProgressIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'))
+    || { [storageRecipeType]: { [name]: [] } };
+    const progressRecipes = { ...inProgressIngredients,
+      [storageRecipeType]: { ...inProgressIngredients[storageRecipeType], [name]: [] } };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
+
+    // if (inProgressIngredients) {
+    //   console.log('ta lá');
+    // }
     if (startedRecipes.some((x) => x === name)) {
       setStartBtnKey((x) => x + 1);
       return;
@@ -45,13 +53,25 @@ function RecipeDetails() {
     <div>
       { recipe[recipeType]?.length > 0
         && recipe[recipeType].map((x, y) => {
-          console.log('funciona');
+          const progressRecipes = JSON.parse(
+            localStorage.getItem('inProgressRecipes'),
+          ) || {};
+          console.log(recipeType);
+          let inProgress;
+          if (Object.keys(progressRecipes).length > 0) {
+            console.log(storageRecipeType);
+            const isInProgress = Object.keys(progressRecipes[storageRecipeType])
+              .some((recIn) => (
+                recIn === x[`id${pathname.includes('foods') ? 'Meal' : 'Drink'}`]));
+            inProgress = isInProgress;
+          }
           return (
+
             <div key={ y }>
               <RecipeDetailsInfo x={ x } y={ y } />
               {
-                !startedRecipes.some((name) => name === x[`id${pathname.includes('foods')
-                  ? 'Meal' : 'Drink'}`])
+                (!startedRecipes.some((name) => name === x[`id${pathname.includes('foods')
+                  ? 'Meal' : 'Drink'}`]) || inProgress)
                 && (
                   <button
                     data-testid="start-recipe-btn"
@@ -64,7 +84,7 @@ function RecipeDetails() {
                     }
                     onClick={ onStartRecipeBtnClick }
                   >
-                    Start Recipe
+                    { inProgress ? 'Continue Recipe' : 'Start Recipe' }
                   </button>)
               }
             </div>
