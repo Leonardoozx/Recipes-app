@@ -1,8 +1,8 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { findByRole, findByTestId, fireEvent, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import RecipeInProgress from "../Pages/RecipeInProgress";
 import renderWithRouterAndRedux from "./Helpers/RenderWithRouterAndRedux";
-import { drinkMock, favoriteDrink, mockDrinkFetch, mockMealFetch } from "./Helpers/mocks";
+import { drinkMock, favoriteDrink, mockDrinkFetch, mockMealFetch, doneDrinkMock, doneMealMock } from "./Helpers/mocks";
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
@@ -11,12 +11,12 @@ const originalClipboard = { ...global.navigator.clipboard };
 beforeEach(() => {
   let clipboardData = ''
   const mockClipboard = {
-      writeText: jest.fn(
-          (data) => {clipboardData = data}
-      ),
-      readText: jest.fn(
-          () => {return clipboardData}  
-      ),
+    writeText: jest.fn(
+      (data) => { clipboardData = data }
+    ),
+    readText: jest.fn(
+      () => { return clipboardData }
+    ),
   };
   global.navigator.clipboard = mockClipboard;
 
@@ -30,8 +30,8 @@ afterEach(() => {
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
-      drinkId: '13837',
-      foodId: '52771',
+    drinkId: '13837',
+    foodId: '52771',
   }),
 })) // Não estava conseguindo testar a URL com a qual a requisição da API estava sendo feita porque parte da URL estava sendo definida pelo retorno do hook useParams(). Por isso pesquisei como poderia fazer um mock desse hook. Fonte: https://stackoverflow.com/questions/58117890/how-to-test-components-using-new-react-router-hooks/58206121#58206121
 
@@ -59,9 +59,27 @@ describe('Tests Recipe In Progress Page with drink', () => {
     expect((await screen.findAllByRole('checkbox'))[0]).not.toHaveAttribute('checked');
     fireEvent.click((await screen.findAllByRole('checkbox'))[0]);
     expect((await screen.findAllByRole('checkbox'))[0]).toHaveAttribute('checked');
-    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes'))).toHaveLength(1);
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toHaveLength(1);
     fireEvent.click((await screen.findAllByRole('checkbox'))[0]);
-    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes'))).toHaveLength(0);
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toHaveLength(0);
+  });
+
+  it('Tests the finish button', async () => {
+    const { history } = renderWithRouterAndRedux(<RecipeInProgress />, initialState, 'drinks/13837/in-progress');
+    expect(await screen.findByTestId('finish-recipe-btn')).toBeDisabled();
+    expect(history.location.pathname).not.toBe('/done-recipes');
+    const checkboxArr = await screen.findAllByRole('checkbox');
+    checkboxArr.forEach((checkbox) => fireEvent.click(checkbox));
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toBeTruthy();
+    expect(JSON.parse(global.localStorage.getItem('doneRecipes'))).toBeFalsy();
+    expect(await screen.findByTestId('finish-recipe-btn')).not.toBeDisabled();
+    fireEvent.click(await screen.findByTestId('finish-recipe-btn'));
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toBeFalsy;
+    expect(JSON.parse(global.localStorage.getItem('doneRecipes'))).toBeTruthy();
+    expect(history.location.pathname).toBe('/done-recipes');
+    const doneRecipes = JSON.parse(global.localStorage.getItem('doneRecipes')); 
+    expect(doneRecipes[0]).toStrictEqual(doneDrinkMock);
+
   })
 })
 
@@ -73,6 +91,17 @@ describe('Tests Recipe In Progress Page with meal', () => {
     const mealFetchURL = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52771';
     expect(global.fetch).toHaveBeenCalledWith(mealFetchURL);
   });
+  it('Tests button finish', async () => {
+    global.localStorage.clear();
+    renderWithRouterAndRedux(<RecipeInProgress />, initialState, '/foods/53060/in-progress');
+    const checkboxArr = await screen.findAllByRole('checkbox');
+    checkboxArr.forEach((checkbox) => fireEvent.click(checkbox));
+    fireEvent.click(await screen.findByTestId('finish-recipe-btn'));
+    const doneRecipes = JSON.parse(global.localStorage.getItem('doneRecipes')); 
+    console.log(doneRecipes);
+    expect(doneRecipes[0]).toStrictEqual(doneMealMock);
+
+  })
 })
 
 describe('Tests share and favorite buttons', () => {

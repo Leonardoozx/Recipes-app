@@ -7,15 +7,20 @@ function RecipeInfo(props) {
   const [doneIngredients, setIngredient] = useState([]);
   const [buttonDisabled, changeButtonStatus] = useState(true);
   const { type, recipe, finishButton } = props;
+  const recipeTypePlural = type.toLowerCase();
+  const recipeType = type.replace('s', '');
+  const recipeId = recipe[`id${recipeType}`];
   useEffect(() => {
     function resumeRecipe() {
-      const ingredients = JSON.parse(
+      const savedIngredients = JSON.parse(
         localStorage.getItem('inProgressRecipes'),
-      ) || [];
-      setIngredient(ingredients);
+      ) || { [recipeTypePlural]: { [recipeId]: [] } };
+      const ingredients = savedIngredients[recipeTypePlural] || [];
+      setIngredient(ingredients[recipeId] || []);
     }
     resumeRecipe();
-  }, []);
+  }, [recipeId, recipeTypePlural]);
+
   useEffect(() => {
     function activateFinishButton() {
       Object.keys(recipe).forEach((key) => {
@@ -25,15 +30,27 @@ function RecipeInfo(props) {
       });
     }
     activateFinishButton();
-  }, [doneIngredients]);
+  }, [recipe, doneIngredients]);
   function checkedBox(id) {
     return doneIngredients.some((ingredient) => ingredient === id);
   }
   const saveIngredient = (target) => {
     const ingredient = [...doneIngredients];
+    const savedIngredients = JSON.parse(localStorage.getItem('inProgressRecipes')) || {
+      [recipeTypePlural]: {
+        [recipeId]: [],
+      },
+    };
     if (doneIngredients.every((el) => el !== target.id)) {
+      const inProgressRecipes = {
+        ...savedIngredients,
+        [recipeTypePlural]: {
+          ...savedIngredients[recipeTypePlural],
+          [recipeId]: [...doneIngredients, target.id],
+        },
+      };
       localStorage.setItem(
-        'inProgressRecipes', JSON.stringify([...ingredient, target.id]),
+        'inProgressRecipes', JSON.stringify(inProgressRecipes),
       );
       setIngredient([...doneIngredients, target.id]);
       return;
@@ -41,13 +58,38 @@ function RecipeInfo(props) {
     const filteredArray = ingredient.filter((ingr) => ingr !== target.id);
     setIngredient(filteredArray);
     localStorage.setItem(
-      'inProgressRecipes', JSON.stringify(filteredArray),
+      'inProgressRecipes', JSON.stringify({
+        ...savedIngredients,
+        [recipeTypePlural]: {
+          ...savedIngredients[recipeTypePlural],
+          [recipeId]: filteredArray,
+        },
+      }),
     );
   };
-  const recipeType1 = type.split('');
-  recipeType1.pop();
-  const recipeType = recipeType1.join('');
+
+  const finishRecipe = () => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const today = new Date().toLocaleDateString();
+    const newRecipe = {
+      image: recipe[`str${recipeType}Thumb`],
+      name: recipe[`str${recipeType}`],
+      id: recipeId,
+      alcoholicOrNot: recipeType.toLowerCase() === 'drink' ? recipe.strAlcoholic : '',
+      category: recipe.strCategory,
+      type: recipeType === 'Meal' ? 'food' : 'drink',
+      nationality: recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea,
+      tags: recipeType === 'Meal' ? recipe.strTags.split(',') : '',
+      doneDate: today,
+    };
+    console.log(newRecipe);
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, newRecipe]));
+    const savedIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    delete savedIngredients[recipeTypePlural][recipeId];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(savedIngredients));
+  };
   let index = 0;
+
   return (
     <main>
       <h1 data-testid="recipe-title">{recipe[`str${recipeType}`]}</h1>
@@ -60,7 +102,7 @@ function RecipeInfo(props) {
       <ShareBtns
         image={ recipe[`str${recipeType}Thumb`] }
         name={ recipe[`str${recipeType}`] }
-        id={ recipe[`id${recipeType}`] }
+        id={ recipeId }
         alcoholicOrNot={ recipeType.toLowerCase() === 'drink' ? recipe.strAlcoholic : '' }
         category={ recipe.strCategory }
         type={ recipeType === 'Meal' ? 'food' : 'drink' }
@@ -74,25 +116,30 @@ function RecipeInfo(props) {
           index += 1;
           return (
             <div data-testid={ `${index - 1}-ingredient-step` } key={ key }>
-              <label htmlFor={ key }>
-                {recipe[key]}
-                { checkedBox(key)
-                  ? (
+
+              { checkedBox(key)
+                ? (
+                  <label style={ { textDecoration: 'line-through' } } htmlFor={ key }>
+                    {recipe[key]}
                     <input
                       id={ key }
                       type="checkbox"
                       onChange={ ({ target }) => saveIngredient(target) }
                       defaultChecked
-                    />)
-                  : (
+                    />
+                  </label>)
+
+                : (
+                  <label htmlFor={ key }>
+                    {recipe[key]}
                     <input
                       id={ key }
                       type="checkbox"
                       checked={ checkedBox(key) }
                       onChange={ ({ target }) => saveIngredient(target) }
                     />
-                  )}
-              </label>
+                  </label>
+                )}
             </div>
           );
         }
@@ -110,6 +157,7 @@ function RecipeInfo(props) {
             style={ { position: 'fixed' } }
             data-testid="finish-recipe-btn"
             disabled={ buttonDisabled }
+            onClick={ finishRecipe }
           >
             {' '}
             Finalizar
