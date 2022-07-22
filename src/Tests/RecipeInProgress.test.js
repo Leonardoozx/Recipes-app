@@ -122,7 +122,7 @@ describe('Tests share and favorite buttons', () => {
     renderWithRouterAndRedux(<RecipeInProgress />, initialState, '/drinks/13837/in-progress');
     expect(screen.queryByText('Link copied!')).toBe(null);
     fireEvent.click(await screen.findByTestId('share-btn'));
-    expect(navigator.clipboard.writeText).toBeCalledTimes(1);
+    expect(navigator.clipboard.writeText).toBeCalled();
     expect(navigator.clipboard.readText()).toEqual('http://localhost:3000/drinks/13837');
     expect(screen.getByText('Link copied!')).toBeDefined();
   })

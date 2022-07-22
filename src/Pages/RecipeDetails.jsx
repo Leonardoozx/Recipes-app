@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import RecipeDetailsInfo from '../Components/RecipeDetailsInfo';
+import RecipeDetailsInfo, { captalizeTypes } from '../Components/RecipeDetailsInfo';
 
 function RecipeDetails() {
   // Referência: https://stackoverflow.com/questions/68892625/how-to-use-props-match-params
@@ -9,8 +9,6 @@ function RecipeDetails() {
   const { location: { pathname } } = history;
 
   const [recipe, setRecipe] = useState([]);
-  const [startBtnKey, setStartBtnKey] = useState(0);
-
   const mealUrl = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
   const drinkUrl = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=';
 
@@ -22,7 +20,7 @@ function RecipeDetails() {
       setRecipe(request);
     };
     fetchRecipe();
-    return (setRecipe([]));
+    return setRecipe([]);
   }, [pathname, id]);
 
   const recipeType = pathname.includes('food') ? 'meals' : 'drinks';
@@ -31,22 +29,24 @@ function RecipeDetails() {
 
   const storageRecipeType = pathname.includes('food') ? 'meals' : 'cocktails';
   const onStartRecipeBtnClick = ({ target: { name } }) => {
+    localStorage.setItem('startedRecipes', JSON.stringify([...startedRecipes, name]));
     const inProgressIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'))
     || { [storageRecipeType]: { [name]: [] } };
     const progressRecipes = { ...inProgressIngredients,
       [storageRecipeType]: { ...inProgressIngredients[storageRecipeType], [name]: [] } };
     localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
 
-    // if (inProgressIngredients) {
-    //   console.log('ta lá');
-    // }
-    if (startedRecipes.some((x) => x === name)) {
-      setStartBtnKey((x) => x + 1);
-      return;
+    const { type } = captalizeTypes(recipeType, recipe[recipeType][0]);
+    const isInProgress = Object.keys(inProgressIngredients[storageRecipeType])
+      .some((recIn) => (
+        recIn === recipe[recipeType][0][`id${type}`]));
+
+    if (isInProgress) {
+      history.push(`${pathname}/in-progress`);
     }
-    history.push(`${pathname}/in-progress`);
-    setStartBtnKey((x) => x + 1);
-    localStorage.setItem('startedRecipes', JSON.stringify([...startedRecipes, name]));
+
+    // history.push(`${pathname}/in-progress`);
+    // setStartBtnKey((x) => x + 1);
   };
 
   return (
@@ -56,26 +56,25 @@ function RecipeDetails() {
           const progressRecipes = JSON.parse(
             localStorage.getItem('inProgressRecipes'),
           ) || {};
-          console.log(recipeType);
           let inProgress;
-          if (Object.keys(progressRecipes).length > 0) {
-            console.log(storageRecipeType);
+          if (Object.keys(progressRecipes).length > 0
+          && progressRecipes[storageRecipeType]) {
             const isInProgress = Object.keys(progressRecipes[storageRecipeType])
               .some((recIn) => (
                 recIn === x[`id${pathname.includes('foods') ? 'Meal' : 'Drink'}`]));
             inProgress = isInProgress;
           }
+          const hasStarted = startedRecipes.some((name) => (
+            name === x[`id${pathname.includes('foods') ? 'Meal' : 'Drink'}`]));
           return (
 
             <div key={ y }>
               <RecipeDetailsInfo x={ x } y={ y } />
               {
-                (!startedRecipes.some((name) => name === x[`id${pathname.includes('foods')
-                  ? 'Meal' : 'Drink'}`]) || inProgress)
+                (!hasStarted || inProgress)
                 && (
                   <button
                     data-testid="start-recipe-btn"
-                    key={ startBtnKey }
                     className="start-recipe-btn"
                     type="button"
                     name={
