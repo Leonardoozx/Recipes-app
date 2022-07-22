@@ -85,7 +85,7 @@ function RecipeInfo(props) {
       category: recipe.strCategory,
       type: recipeType === 'Meal' ? 'food' : 'drink',
       nationality: recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea,
-      tags: recipeType === 'Meal' ? recipe.strTags.split(',') : '',
+      tags: typeof recipe.strTags === 'string' ? recipe.strTags.split(',') : '',
       doneDate: today,
     };
     console.log(newRecipe);
@@ -114,6 +114,7 @@ function RecipeInfo(props) {
         category={ recipe.strCategory }
         type={ recipeType === 'Meal' ? 'food' : 'drink' }
         nationality={ recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea }
+        testId="share-btn"
       />
       <h4 data-testid="recipe-category">
         {recipeType === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
