@@ -17,6 +17,7 @@ function RecipeDetails() {
     const URL = type === '/foods' ? `${mealUrl}${id}` : `${drinkUrl}${id}`;
     const fetchRecipe = async () => {
       const request = await fetch(URL).then((response) => response.json());
+      console.log(request, type);
       setRecipe(request);
     };
     fetchRecipe();
@@ -35,7 +36,6 @@ function RecipeDetails() {
     const progressRecipes = { ...inProgressIngredients,
       [storageRecipeType]: { ...inProgressIngredients[storageRecipeType], [name]: [] } };
     localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
-
     const { type } = captalizeTypes(recipeType, recipe[recipeType][0]);
     const isInProgress = Object.keys(inProgressIngredients[storageRecipeType])
       .some((recIn) => (

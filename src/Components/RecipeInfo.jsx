@@ -72,6 +72,7 @@ function RecipeInfo(props) {
   };
 
   const finishRecipe = () => {
+    console.log(typeof recipe.strTags);
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     const today = new Date().toLocaleDateString();
     const newRecipe = {
@@ -82,10 +83,9 @@ function RecipeInfo(props) {
       category: recipe.strCategory,
       type: recipeType === 'Meal' ? 'food' : 'drink',
       nationality: recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea,
-      tags: recipeType === 'Meal' ? recipe.strTags.split(',') : '',
+      tags: typeof recipe.strTags === 'string' ? recipe.strTags.split(',') : '',
       doneDate: today,
     };
-    console.log(newRecipe);
     localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, newRecipe]));
     const savedIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'));
     delete savedIngredients[recipeTypePlural][recipeId];
