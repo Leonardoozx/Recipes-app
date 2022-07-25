@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import FavoriteRecipesDetails from '../Components/FavoriteRecipesInfo';
 import Header from '../Components/Header';
-// import ShareBtns from '../Components/ShareBtns';
 
 function FavoriteRecipes() {
   const [filterRecipe, setFilterRecipe] = useState('all');
