@@ -11,7 +11,7 @@ function FavoriteRecipes() {
     console.log(showFavoriteRecipes);
 
     if (filterRecipe === 'all') {
-      return (getFavoriteRecipes.map((item, index) => (
+      return (getFavoriteRecipes?.map((item, index) => (
         <FavoriteRecipesDetails
           key={ item.id }
           index={ index }
@@ -26,10 +26,7 @@ function FavoriteRecipes() {
         />
       )));
     }
-    if (getFavoriteRecipes === 0) {
-      return null;
-    }
-    return (getFavoriteRecipes.filter((item) => item.type === filterRecipe)
+    return (getFavoriteRecipes?.filter((item) => item.type === filterRecipe)
       .map((item, index) => (
         <FavoriteRecipesDetails
           index={ index }

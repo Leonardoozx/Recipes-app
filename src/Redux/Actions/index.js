@@ -1,6 +1,12 @@
 export const SEND_MEALS = 'SEND MEALS';
+export const SEND_CATEGORIES = 'SEND_CATEGORIES';
+export const SEARCH_BAR = 'SEARCH_BAR';
 
 export const actSendMeals = (payload) => ({ type: SEND_MEALS, payload });
+
+export const actSendCategories = { type: SEND_CATEGORIES };
+
+export const actIsSearchBar = { type: SEARCH_BAR };
 
 export const mealsThunk = (searchBarInput, searchCondition, type) => {
   const urlFoods = 'https://www.themealdb.com/api/json/v1/1/';

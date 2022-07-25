@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useGenericState from '../Hooks/useGenericState';
-import { mealsThunk } from '../Redux/Actions';
+import { actIsSearchBar, mealsThunk } from '../Redux/Actions';
 
-function SearchBar({ dispatchMeals }) {
+function SearchBar({ dispatchMeals, dispatchSearchBar }) {
   const history = useHistory();
 
   const initialState = {
@@ -25,6 +25,7 @@ function SearchBar({ dispatchMeals }) {
       global.alert('Fill in the search field');
     } else {
       dispatchMeals(searchBarInput, searchCondition, history.location.pathname);
+      dispatchSearchBar();
     }
   };
 
@@ -87,10 +88,13 @@ function SearchBar({ dispatchMeals }) {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchMeals: (...params) => dispatch(mealsThunk(...params)),
+  dispatchSearchBar: () => dispatch(actIsSearchBar),
 });
 
 SearchBar.propTypes = {
   dispatchMeals: PropTypes.func.isRequired,
+  dispatchSearchBar: PropTypes.func.isRequired,
+
 };
 
 export default connect(null, mapDispatchToProps)(SearchBar);
