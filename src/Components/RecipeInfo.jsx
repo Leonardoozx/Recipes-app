@@ -111,6 +111,7 @@ function RecipeInfo(props) {
         category={ recipe.strCategory }
         type={ recipeType === 'Meal' ? 'food' : 'drink' }
         nationality={ recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea }
+        testId="share-btn"
       />
       <h4 data-testid="recipe-category">
         {recipeType === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}

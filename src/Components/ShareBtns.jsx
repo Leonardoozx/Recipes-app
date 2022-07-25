@@ -6,7 +6,7 @@ import whiteHeart from '../images/whiteHeartIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
 function ShareBtns({
-  alcoholicOrNot, category, id, image, name, nationality, type, favoriteBtn }) {
+  alcoholicOrNot, category, id, image, name, nationality, type, favoriteBtn, testId }) {
   const props = { alcoholicOrNot, category, id, image, name, nationality, type };
   const [willAppearText, appearText] = useState(false);
   const [imageKey, setImageKey] = useState(0);
@@ -33,12 +33,13 @@ function ShareBtns({
       { willAppearText && <span>Link copied!</span> }
 
       <button
-        data-testid="share-btn"
+        data-testid={ testId }
         type="button"
         onClick={ () => {
           copy(`http://localhost:3000/${type}s/${id}`);
           appearText(true);
         } }
+        src={ buttonImg }
       >
         <img src={ buttonImg } alt="button img" />
       </button>
@@ -62,14 +63,29 @@ function ShareBtns({
 }
 
 ShareBtns.propTypes = {
-  id: PropTypes.string.isRequired,
-  favoriteBtn: PropTypes.bool.isRequired,
-  alcoholicOrNot: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  nationality: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  favoriteBtn: PropTypes.bool,
+  alcoholicOrNot: PropTypes.string,
+  category: PropTypes.string,
+  image: PropTypes.string,
+  name: PropTypes.string,
+  nationality: PropTypes.string,
+  type: PropTypes.string,
+  testId: PropTypes.string,
+
+};
+
+ShareBtns.defaultProps = {
+  id: '',
+  favoriteBtn: false,
+  alcoholicOrNot: '',
+  category: '',
+  image: '',
+  name: '',
+  nationality: '',
+  type: '',
+  testId: '',
+
 };
 
 export default ShareBtns;
