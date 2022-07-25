@@ -132,6 +132,8 @@ export const doneDrinkMock = {
     "doneDate": new Date().toLocaleDateString(),
 };
 
+export const storageDrinkIngredientsMock =  { drinks: { '13837': [] } }
+
 export const doneMealMock = {
         "image": "https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg",
         "name": "Burek",

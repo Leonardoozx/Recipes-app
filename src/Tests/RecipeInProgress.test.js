@@ -59,9 +59,9 @@ describe('Tests Recipe In Progress Page with drink', () => {
     expect((await screen.findAllByRole('checkbox'))[0]).not.toHaveAttribute('checked');
     fireEvent.click((await screen.findAllByRole('checkbox'))[0]);
     expect((await screen.findAllByRole('checkbox'))[0]).toHaveAttribute('checked');
-    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toHaveLength(1);
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).cocktails['13837']).toHaveLength(1);
     fireEvent.click((await screen.findAllByRole('checkbox'))[0]);
-    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toHaveLength(0);
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).cocktails['13837']).toHaveLength(0);
   });
 
   it('Tests the finish button', async () => {
@@ -70,11 +70,11 @@ describe('Tests Recipe In Progress Page with drink', () => {
     expect(history.location.pathname).not.toBe('/done-recipes');
     const checkboxArr = await screen.findAllByRole('checkbox');
     checkboxArr.forEach((checkbox) => fireEvent.click(checkbox));
-    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toBeTruthy();
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).cocktails['13837']).toBeTruthy();
     expect(JSON.parse(global.localStorage.getItem('doneRecipes'))).toBeFalsy();
     expect(await screen.findByTestId('finish-recipe-btn')).not.toBeDisabled();
     fireEvent.click(await screen.findByTestId('finish-recipe-btn'));
-    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).drinks['13837']).toBeFalsy;
+    expect(JSON.parse(global.localStorage.getItem('inProgressRecipes')).cocktails['13837']).toBeFalsy;
     expect(JSON.parse(global.localStorage.getItem('doneRecipes'))).toBeTruthy();
     expect(history.location.pathname).toBe('/done-recipes');
     const doneRecipes = JSON.parse(global.localStorage.getItem('doneRecipes')); 
@@ -98,7 +98,6 @@ describe('Tests Recipe In Progress Page with meal', () => {
     checkboxArr.forEach((checkbox) => fireEvent.click(checkbox));
     fireEvent.click(await screen.findByTestId('finish-recipe-btn'));
     const doneRecipes = JSON.parse(global.localStorage.getItem('doneRecipes')); 
-    console.log(doneRecipes);
     expect(doneRecipes[0]).toStrictEqual(doneMealMock);
 
   })
@@ -122,7 +121,7 @@ describe('Tests share and favorite buttons', () => {
     renderWithRouterAndRedux(<RecipeInProgress />, initialState, '/drinks/13837/in-progress');
     expect(screen.queryByText('Link copied!')).toBe(null);
     fireEvent.click(await screen.findByTestId('share-btn'));
-    expect(navigator.clipboard.writeText).toBeCalledTimes(1);
+    expect(navigator.clipboard.writeText).toBeCalled();
     expect(navigator.clipboard.readText()).toEqual('http://localhost:3000/drinks/13837');
     expect(screen.getByText('Link copied!')).toBeDefined();
   })

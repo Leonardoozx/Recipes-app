@@ -1,20 +1,17 @@
-/**
- * It renders a recipe's information, including its ingredients, instructions and a button to finish
- * the recipe
- * @returns a JSX element.
- */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ShareBtns from './ShareBtns';
 
 function RecipeInfo(props) {
+  const { location: { pathname } } = useHistory();
   const [doneIngredients, setIngredient] = useState([]);
   const [buttonDisabled, changeButtonStatus] = useState(true);
   const { type, recipe, finishButton } = props;
-  const recipeTypePlural = type.toLowerCase();
   const recipeType = type.replace('s', '');
   const recipeId = recipe[`id${recipeType}`];
+  const recipeTypePlural = pathname.includes('food') ? 'meals' : 'cocktails';
+
   useEffect(() => {
     function resumeRecipe() {
       const savedIngredients = JSON.parse(
@@ -75,6 +72,7 @@ function RecipeInfo(props) {
   };
 
   const finishRecipe = () => {
+    console.log(typeof recipe.strTags);
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     const today = new Date().toLocaleDateString();
     const newRecipe = {
@@ -85,10 +83,9 @@ function RecipeInfo(props) {
       category: recipe.strCategory,
       type: recipeType === 'Meal' ? 'food' : 'drink',
       nationality: recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea,
-      tags: recipeType === 'Meal' ? recipe.strTags.split(',') : '',
+      tags: typeof recipe.strTags === 'string' ? recipe.strTags.split(',') : '',
       doneDate: today,
     };
-    console.log(newRecipe);
     localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, newRecipe]));
     const savedIngredients = JSON.parse(localStorage.getItem('inProgressRecipes'));
     delete savedIngredients[recipeTypePlural][recipeId];
@@ -114,6 +111,7 @@ function RecipeInfo(props) {
         category={ recipe.strCategory }
         type={ recipeType === 'Meal' ? 'food' : 'drink' }
         nationality={ recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea }
+        testId="share-btn"
       />
       <h4 data-testid="recipe-category">
         {recipeType === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}

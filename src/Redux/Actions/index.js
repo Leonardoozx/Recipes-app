@@ -47,7 +47,6 @@ export const categoriesThunk = (category, type) => {
   }
   return async (dispatch) => {
     let request = await fetch(URL).then((response) => response.json());
-    console.log(request);
     request = { [type]: request[type].slice(0, LIMIT) };
     dispatch(actSendMeals(request));
   };
