@@ -120,11 +120,16 @@ function RecipeInfo(props) {
         if (key.includes('strIngredient') && recipe[key]) {
           index += 1;
           return (
-            <div data-testid={ `${index - 1}-ingredient-step` } key={ key }>
+            <div>
 
               { checkedBox(key)
                 ? (
-                  <label style={ { textDecoration: 'line-through' } } htmlFor={ key }>
+                  <label
+                    data-testid={ `${index - 1}-ingredient-step` }
+                    key={ key }
+                    style={ { textDecoration: 'line-through' } }
+                    htmlFor={ key }
+                  >
                     {recipe[key]}
                     <input
                       id={ key }
@@ -135,8 +140,13 @@ function RecipeInfo(props) {
                   </label>)
 
                 : (
-                  <label htmlFor={ key }>
+                  <label
+                    data-testid={ `${index - 1}-ingredient-step` }
+                    key={ key }
+                    htmlFor={ key }
+                  >
                     {recipe[key]}
+
                     <input
                       id={ key }
                       type="checkbox"

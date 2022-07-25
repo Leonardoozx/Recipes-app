@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { categoriesThunk, mealsThunk } from '../Redux/Actions';
+import { actSendCategories, categoriesThunk, mealsThunk } from '../Redux/Actions';
 
-const Categories = ({ filterByCategory, dispatchMeals }) => {
+const Categories = ({ filterByCategory, dispatchMeals, dispatchCategory }) => {
   const location = useLocation();
   const [categories, setCategories] = useState([]);
   const [activeCat, setActiveCat] = useState('');
@@ -18,6 +18,7 @@ const Categories = ({ filterByCategory, dispatchMeals }) => {
       filterByCategory(name, type);
       setActiveCat(name);
     }
+    dispatchCategory();
   };
 
   useEffect(() => {
@@ -66,11 +67,13 @@ const Categories = ({ filterByCategory, dispatchMeals }) => {
 Categories.propTypes = {
   filterByCategory: PropTypes.func.isRequired,
   dispatchMeals: PropTypes.func.isRequired,
+  dispatchCategory: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   filterByCategory: (...params) => dispatch(categoriesThunk(...params)),
   dispatchMeals: (...params) => dispatch(mealsThunk(...params)),
+  dispatchCategory: () => dispatch(actSendCategories),
 });
 
 export default connect(null, mapDispatchToProps)(Categories);

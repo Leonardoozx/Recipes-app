@@ -44,25 +44,20 @@ function DoneRecipes() {
       >
         Drinks
       </button>
-      <Link to="./foods">
-        <button type="button">
-          Voltar
-        </button>
-      </Link>
-      { takeDoneRecipes.length > 0
-      && takeDoneRecipes.map((element, i) => (
+      { takeDoneRecipes?.length > 0
+      && takeDoneRecipes?.map((element, i) => (
         <div key={ element.id }>
-          <p data-testid={ `${i}-horizontal-top-text` }>
-            { element.alcoholicOrNot !== ''
-          && element.alcoholicOrNot }
+          <div data-testid={ `${i}-horizontal-top-text` }>
+           <p> { element?.alcoholicOrNot !== ''
+          && element?.alcoholicOrNot } </p>
             {' '}
             -
-            { element.nationality }
+          <p>  { element?.nationality } </p>
             {' '}
             -
             {' '}
-            { element.category }
-          </p>
+            <p>{ element?.category } </p>
+          </div>
           <Link to={ `./${element.type}s/${element.id}` }>
             <p data-testid={ `${i}-horizontal-name` }>{ element.name }</p>
           </Link>
