@@ -92,3 +92,22 @@ footer {
 .recipe-card img {
   width: 100%;
 }
+
+.category-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.category-button {
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+}
