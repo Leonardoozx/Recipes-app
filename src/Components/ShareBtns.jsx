@@ -1,6 +1,5 @@
 import copy from 'clipboard-copy';
 import React, { useState } from 'react';
-// import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import buttonImg from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
@@ -9,7 +8,6 @@ import blackHeart from '../images/blackHeartIcon.svg';
 function ShareBtns({
   alcoholicOrNot, category, id, image, name, nationality, type, favoriteBtn, testId }) {
   const props = { alcoholicOrNot, category, id, image, name, nationality, type };
-  // const { pathname } = useLocation();
   const [willAppearText, appearText] = useState(false);
   const [imageKey, setImageKey] = useState(0);
 
@@ -38,8 +36,6 @@ function ShareBtns({
         data-testid={ testId }
         type="button"
         onClick={ () => {
-          // copy(`http://localhost:3000${pathname}`);
-          // copy(`http://localhost:3000${pathname.replace('/in-progress', '')}`);
           copy(`http://localhost:3000/${type}s/${id}`);
           appearText(true);
         } }

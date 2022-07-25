@@ -4,6 +4,15 @@ import PropTypes from 'prop-types';
 import ShareBtns from './ShareBtns';
 import '../CSS/recipeDetails.css';
 
+export const captalizeTypes = (type, recipe) => {
+  const captalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+  const splitedType = captalizedType.split('');
+  splitedType.pop();
+  const thumb = `str${splitedType.join('')}Thumb`;
+  const recipeName = recipe[`str${splitedType.join('')}`];
+  return { thumb, recipeName, type: splitedType.join('') };
+};
+
 function RecipeDetailsInfo({ x, y }) {
   const { location: { pathname } } = useHistory();
 
@@ -25,14 +34,6 @@ function RecipeDetailsInfo({ x, y }) {
   }, [pathname]);
 
   // Referência: https://flexiple.com/javascript-capitalize-first-letter/
-  const captalizeTypes = (type, recipe) => {
-    const captalizedType = type.charAt(0).toUpperCase() + type.slice(1);
-    const splitedType = captalizedType.split('');
-    splitedType.pop();
-    const thumb = `str${splitedType.join('')}Thumb`;
-    const recipeName = recipe[`str${splitedType.join('')}`];
-    return { thumb, recipeName, type: splitedType.join('') };
-  };
 
   const recipeType = pathname.includes('food') ? 'meals' : 'drinks';
   const { thumb, recipeName, type } = captalizeTypes(recipeType, x);
