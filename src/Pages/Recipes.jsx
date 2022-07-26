@@ -29,7 +29,7 @@ function Recipes({ recipes, dispatchMeals, title }) {
     if (recipes[type].length === 1 && !recipes.isCategory) {
       history.push(`/${nextLocationType}/${recipes[type][0][`id${newType}`]}`);
     }
-  }, [history, recipes, type]);
+  }, [history, location.pathname, recipes, type]);
   return (
     <div>
       <Header renderButton title={ title } />
