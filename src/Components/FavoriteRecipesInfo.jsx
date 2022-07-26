@@ -51,19 +51,17 @@ function FavoriteRecipesDetails({
             alt={ name }
             style={ { width: '200px' } }
           />
-          <div>
-            <p
-              data-testid={ `${index}-horizontal-top-text` }
-            >
-              {`${filterRecipe} - ${category}`}
-            </p>
-            <br />
-            <p
-              data-testid={ `${index}-horizontal-name` }
-            >
-              { name }
-            </p>
+          <div
+            data-testid={ `${index}-horizontal-top-text` }
+          >
+            <p>{`${filterRecipe} - ${category}`}</p>
           </div>
+          <br />
+          <p
+            data-testid={ `${index}-horizontal-name` }
+          >
+            { name }
+          </p>
         </Link>
         <div>
           <button

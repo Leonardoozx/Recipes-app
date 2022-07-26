@@ -1,7 +1,7 @@
-import { SEND_MEALS } from '../Actions';
+import { SEND_MEALS, SEND_CATEGORIES, SEARCH_BAR } from '../Actions';
 
 const INITAL_STATE = {
-  recipes: { meals: [], drinks: [] },
+  recipes: { meals: [], drinks: [], isCategory: false },
 };
 
 const mealsReducer = (state = INITAL_STATE, action) => {
@@ -14,6 +14,24 @@ const mealsReducer = (state = INITAL_STATE, action) => {
         ...action.payload,
       },
     };
+  case SEND_CATEGORIES:
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        isCategory: true,
+      },
+    };
+
+  case SEARCH_BAR:
+    return {
+      ...state,
+      recipes: {
+        ...state.recipes,
+        isCategory: false,
+      },
+    };
+
   default:
     return { ...state };
   }

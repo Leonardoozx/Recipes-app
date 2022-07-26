@@ -23,9 +23,10 @@ function Recipes({ recipes, dispatchMeals, title }) {
     const captalizedType = type.charAt(0).toUpperCase() + type.slice(1);
     const splitedType = captalizedType.split('');
     splitedType.pop();
+    console.log(location.pathname);
     const newType = splitedType.join('');
     const nextLocationType = type === 'meals' ? 'foods' : 'drinks';
-    if (recipes[type].length === 1) {
+    if (recipes[type].length === 1 && !recipes.isCategory) {
       history.push(`/${nextLocationType}/${recipes[type][0][`id${newType}`]}`);
     }
   }, [history, recipes, type]);

@@ -85,7 +85,6 @@ describe('Testes da página Foods.js', () => {
     jest.spyOn(window, 'alert').mockImplementation(() => {});
     const { history } = renderWithRouterAndRedux(<Recipes title="Foods" />);
     history.push('/foods');
-
     const showSearch = screen.getByTestId('search-top-btn');
     userEvent.click(showSearch);
 
@@ -99,5 +98,12 @@ describe('Testes da página Foods.js', () => {
     await waitFor(() => {
       expect(alert).toHaveBeenCalled();
     });
+    userEvent.click(await screen.findByTestId('Goat-category-filter'));
+    expect(history.location.pathname).toBe('/foods');
+    userEvent.type(inputSearch, '{selectall}{del}Mbuzi Choma');
+    console.log(inputSearch.value)
+    userEvent.click(await screen.findByTestId('name-search-radio'));
+    userEvent.click(buttonSearch);
+    await waitFor(() => expect(history.location.pathname).not.toBe('/foods'));
   })
 })

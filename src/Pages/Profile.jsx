@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 function Profile() {
   const { email } = JSON.parse(localStorage.getItem('user')) || 'email';
@@ -25,6 +26,7 @@ function Profile() {
 
         </button>
       </Link>
+      <Footer />
     </>
   );
 }
