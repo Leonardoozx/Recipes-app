@@ -43,14 +43,9 @@ describe('Tests page DoneRecipes', () => {
     it('Tests if buttons are in the page', () => {
       renderWithRouterAndRedux(<DoneRecipes />)
       const allBtn  = screen.getByTestId('filter-by-all-btn');
-      // const foodBtn  = screen.getByTestId('filter-by-food-btn');
-      // const drinkBtn  = screen.getByTestId('filter-by-drink-btn');
-      // const backBtn  = screen.getByRole('button', {name:'Voltar'});
       userEvent.click(allBtn);
       expect(screen.getByText('Croatian')).toBeInTheDocument()
-      // userEvent.click(foodBtn);
       expect(screen.getByText('Burek')).toBeInTheDocument()
-      // userEvent.click(drinkBtn);
       expect(screen.getByText('Optional alcohol')).toBeInTheDocument()
     })
     it('Tests drink button', () => {

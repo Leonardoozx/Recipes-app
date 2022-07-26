@@ -15,7 +15,6 @@ export const captalizeTypes = (type, recipe) => {
 
 function RecipeDetailsInfo({ x, y }) {
   const { location: { pathname } } = useHistory();
-
   const [recommendation, setRecommendation] = useState([]);
 
   useEffect(() => {
@@ -47,31 +46,38 @@ function RecipeDetailsInfo({ x, y }) {
 
   let index = 0;
   return (
-    <div key={ y }>
-      <img
-        data-testid="recipe-photo"
-        src={ x[thumb] }
-        alt={ recipeName }
-        style={ { width: '200px' } }
-      />
-
-      <ShareBtns
-        image={ x[thumb] }
-        name={ recipeName }
-        id={ x[`id${type}`] }
-        alcoholicOrNot={ storageType === 'drink' ? x.strAlcoholic : '' }
-        category={ x.strCategory }
-        type={ storageType }
-        nationality={ storageType === 'drink' ? '' : x.strArea }
-        favoriteBtn
-        testId="share-btn"
-      />
-
+    <div
+      className="flex flex-col justify-center items-center md:w-100"
+      key={ y }
+    >
+      <div className="flex flex-row items-center">
+        <div className="w-full">
+          <img
+            className="w-80"
+            data-testid="recipe-photo"
+            src={ x[thumb] }
+            alt={ recipeName }
+          />
+        </div>
+        <div>
+          <ShareBtns
+            image={ x[thumb] }
+            name={ recipeName }
+            id={ x[`id${type}`] }
+            alcoholicOrNot={ storageType === 'drink' ? x.strAlcoholic : '' }
+            category={ x.strCategory }
+            type={ storageType }
+            nationality={ storageType === 'drink' ? '' : x.strArea }
+            favoriteBtn
+            testId="share-btn"
+          />
+        </div>
+      </div>
       <h1 data-testid="recipe-title">{recipeName}</h1>
-      <p data-testid="recipe-category">
+      <h4 data-testid="recipe-category">
         { x.idMeal ? x.strCategory : 'Alcoholic' }
-      </p>
-      <div>
+      </h4>
+      <div className="flex flex-col items-center">
         { recipeEntries.map(([isIngredient, ingredient]) => {
           if (isIngredient.includes('strIngredient') && ingredient) {
             index += 1;
@@ -86,7 +92,9 @@ function RecipeDetailsInfo({ x, y }) {
               </p>));
         })}
       </div>
-      <p data-testid="instructions">{x.strInstructions}</p>
+      <div className="w-4/5 text-center">
+        <p data-testid="instructions">{x.strInstructions}</p>
+      </div>
 
       <div className="recommendation">
 
@@ -104,9 +112,9 @@ function RecipeDetailsInfo({ x, y }) {
                   className="recommendation-content"
                 >
                   <img
-                    style={ { width: '120px' } }
                     src={ rec[drinkThumb] }
                     alt=""
+                    // className="object-cover h-full w-full lg:mr-20"
                   />
                   <p data-testid={ `${recIndex}-recomendation-title` }>
                     {drinkName}

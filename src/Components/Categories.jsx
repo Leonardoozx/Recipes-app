@@ -36,7 +36,7 @@ const Categories = ({ filterByCategory, dispatchMeals, dispatchCategory }) => {
     return () => { isMounted = false; };
   }, [location, type]);
   return (
-    <section className="category-container">
+    <section className="flex space-x-1 sm:flex-wrap justify-center mb-3">
       {
         categories.map((recipe, index) => (
           <button
@@ -44,7 +44,8 @@ const Categories = ({ filterByCategory, dispatchMeals, dispatchCategory }) => {
             name={ recipe.strCategory }
             data-testid={ `${recipe.strCategory}-category-filter` }
             key={ index }
-            className="category-button"
+            className="bg-[#9a0000] py-1 px-2
+             text-white rounded border-2 border-[#302d2d]"
             onClick={ selectFilterCategory }
           >
             { recipe.strCategory }
@@ -55,7 +56,7 @@ const Categories = ({ filterByCategory, dispatchMeals, dispatchCategory }) => {
         type="button"
         name="All"
         data-testid="All-category-filter"
-        className="category-button"
+        className="bg-[#9a0000] py-1 px-2 rounded border-2 border-[#302d2d] text-white"
         onClick={ () => { dispatchMeals('', 'Name', location.pathname); } }
       >
         All

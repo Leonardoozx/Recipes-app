@@ -30,53 +30,59 @@ function SearchBar({ dispatchMeals, dispatchSearchBar }) {
   };
 
   return (
-    <form onSubmit={ submitSearch }>
+    <form
+      className="flex flex-col justify-center items-center space-y-2"
+      onSubmit={ submitSearch }
+    >
       <input
+        placeholder="Search"
+        className="mb-2 border p-1 w-full rounded bg-[#D9C6A7]"
         data-testid="search-input"
         name="searchBarInput"
         type="text"
         value={ searchBarInput }
         onChange={ updateGenericState }
       />
+      <div className="flex space-x-2">
+        <label htmlFor="ingredient">
+          Ingredient
+          <input
+            data-testid="ingredient-search-radio"
+            type="radio"
+            name="searchCondition"
+            id="ingredient"
+            value="Ingredient"
+            onClick={ updateGenericState }
+            defaultChecked
+          />
+        </label>
 
-      <label htmlFor="ingredient">
-        Ingredient
-        <input
-          data-testid="ingredient-search-radio"
-          type="radio"
-          name="searchCondition"
-          id="ingredient"
-          value="Ingredient"
-          onClick={ updateGenericState }
-          defaultChecked
-        />
-      </label>
+        <label htmlFor="name">
+          Name
+          <input
+            data-testid="name-search-radio"
+            type="radio"
+            name="searchCondition"
+            id="name"
+            value="Name"
+            onClick={ updateGenericState }
+          />
+        </label>
 
-      <label htmlFor="name">
-        Name
-        <input
-          data-testid="name-search-radio"
-          type="radio"
-          name="searchCondition"
-          id="name"
-          value="Name"
-          onClick={ updateGenericState }
-        />
-      </label>
-
-      <label htmlFor="firstLetter">
-        First letter
-        <input
-          data-testid="first-letter-search-radio"
-          type="radio"
-          name="searchCondition"
-          value="First letter"
-          id="firstLetter"
-          onClick={ updateGenericState }
-        />
-      </label>
-
+        <label htmlFor="firstLetter">
+          First letter
+          <input
+            data-testid="first-letter-search-radio"
+            type="radio"
+            name="searchCondition"
+            value="First letter"
+            id="firstLetter"
+            onClick={ updateGenericState }
+          />
+        </label>
+      </div>
       <button
+        className="mb-4 px-3.5 bg-[#D9C6A7] rounded border-2 border-[#302d2d]"
         data-testid="exec-search-btn"
         type="submit"
       >

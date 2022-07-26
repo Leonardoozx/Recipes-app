@@ -94,25 +94,28 @@ function RecipeInfo(props) {
   let index = 0;
 
   return (
-    <main>
+    <main className="flex flex-col items-center">
       <h1 data-testid="recipe-title">{recipe[`str${recipeType}`]}</h1>
-      <img
-        data-testid="recipe-photo"
-        src={ recipe[`str${recipeType}Thumb`] }
-        alt={ `${recipeType}` }
-        className="recipe-card img"
-      />
-      <ShareBtns
-        favoriteBtn
-        image={ recipe[`str${recipeType}Thumb`] }
-        name={ recipe[`str${recipeType}`] }
-        id={ recipeId }
-        alcoholicOrNot={ recipeType.toLowerCase() === 'drink' ? recipe.strAlcoholic : '' }
-        category={ recipe.strCategory }
-        type={ recipeType === 'Meal' ? 'food' : 'drink' }
-        nationality={ recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea }
-        testId="share-btn"
-      />
+      <div className="flex">
+        <img
+          data-testid="recipe-photo"
+          src={ recipe[`str${recipeType}Thumb`] }
+          alt={ `${recipeType}` }
+          className="recipe-card img w-72 mb-3"
+        />
+        <ShareBtns
+          favoriteBtn
+          image={ recipe[`str${recipeType}Thumb`] }
+          name={ recipe[`str${recipeType}`] }
+          id={ recipeId }
+          alcoholicOrNot={ recipeType.toLowerCase() === 'drink'
+            ? recipe.strAlcoholic : '' }
+          category={ recipe.strCategory }
+          type={ recipeType === 'Meal' ? 'food' : 'drink' }
+          nationality={ recipeType.toLowerCase() === 'drink' ? '' : recipe.strArea }
+          testId="share-btn"
+        />
+      </div>
       <h4 data-testid="recipe-category">
         {recipeType === 'Meal' ? recipe.strCategory : recipe.strAlcoholic}
       </h4>
@@ -160,7 +163,7 @@ function RecipeInfo(props) {
         }
         return null;
       })}
-      <article data-testid="instructions">
+      <article className="mb-20" data-testid="instructions">
         {recipe.strInstructions}
       </article>
       <footer style={ { backgroundColor: 'transparent' } }>
@@ -169,7 +172,7 @@ function RecipeInfo(props) {
         <Link to="/done-recipes">
           <button
             type="button"
-            style={ { position: 'fixed' } }
+            className="start-recipe-btn mt-5 bg-[#9c330d] text-white"
             data-testid="finish-recipe-btn"
             disabled={ buttonDisabled }
             onClick={ finishRecipe }

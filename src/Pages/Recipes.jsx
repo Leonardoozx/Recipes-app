@@ -31,10 +31,10 @@ function Recipes({ recipes, dispatchMeals, title }) {
     }
   }, [history, location.pathname, recipes, type]);
   return (
-    <div>
+    <div className="flex flex-col bg-[url('https://tinyurl.com/29b4cyrp')] bg-cover w-full">
       <Header renderButton title={ title } />
       <Categories />
-      <section className="recipes-container">
+      <section className="flex flex-wrap item-center justify-center">
         {
           recipes[type].map((recipe, index) => (
             <RecipeCard

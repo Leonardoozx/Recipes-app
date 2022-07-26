@@ -1,7 +1,7 @@
 .recommendation {
   display: flex;
   flex-direction: row;
-  max-width: 320px;
+  max-width: 70%;
   overflow-y: scroll;
   text-align: center;
 }

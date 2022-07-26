@@ -8,20 +8,27 @@ import searchIcon from '../images/searchIcon.svg';
 function Header({ renderButton, title }) {
   const [searchBarVisibility, setSearchBarVisibility] = useState(false);
   return (
-    <header>
-      <h1 data-testid="page-title">{ title }</h1>
+    <header className="flex flex-col items-center">
+      <div className="flex justify-center">
+        <h1
+          className="mt-6 font-extrabold text-5xl text-[#9a0000] font-mono"
+          data-testid="page-title"
+        >
+          { title }
 
-      <Link to="/profile">
-        <button type="button">
-          <img
-            src={ Image }
-            alt="top button img"
-            data-testid="profile-top-btn"
-          />
-        </button>
-      </Link>
-
-      { renderButton
+        </h1>
+      </div>
+      <div className="flex flex-row items-start justify-center mb-8">
+        <Link to="/profile">
+          <button className="mr-4" type="button">
+            <img
+              src={ Image }
+              alt="top button img"
+              data-testid="profile-top-btn"
+            />
+          </button>
+        </Link>
+        { renderButton
         && (
           <button
             type="button"
@@ -33,10 +40,9 @@ function Header({ renderButton, title }) {
               alt="search button img"
             />
           </button>)}
-
+      </div>
       { searchBarVisibility
         && <SearchBar />}
-
     </header>
   );
 }
