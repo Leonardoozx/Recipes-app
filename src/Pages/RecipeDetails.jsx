@@ -50,7 +50,7 @@ function RecipeDetails() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-center bg-[url('https://tinyurl.com/29b4cyrp')] items-center">
       { recipe[recipeType]?.length > 0
         && recipe[recipeType].map((x, y) => {
           const progressRecipes = JSON.parse(
@@ -68,14 +68,14 @@ function RecipeDetails() {
             name === x[`id${pathname.includes('foods') ? 'Meal' : 'Drink'}`]));
           return (
 
-            <div key={ y }>
+            <div className="flex flex-col justify-center items-center " key={ y }>
               <RecipeDetailsInfo x={ x } y={ y } />
               {
                 (!hasStarted || inProgress)
                 && (
                   <button
                     data-testid="start-recipe-btn"
-                    className="start-recipe-btn"
+                    className="start-recipe-btn mt-5 bg-[#9c330d] text-white"
                     type="button"
                     name={
                       recipe[recipeType][0][`id${pathname.includes('foods')
@@ -95,6 +95,7 @@ function RecipeDetails() {
       // como usar iFrame (eu tava completamente perdido): https://dequeuniversity.com/rules/axe/4.3/video-caption
       // o que fazia o dar a mensagem 'www.youtube.com refused to connect' e como solucionar: https://forum.freecodecamp.org/t/youtube-refused-to-connect/245262
            <iframe
+             className="mb-20"
              data-testid="video"
              src={ recipe.meals[0].strYoutube.replace('watch?v=', '/embed/') }
              title="YouTube video player"

@@ -22,7 +22,7 @@ function RecipeInProgress() {
     fetchRecipe();
   }, [params.drinkId, params.foodId, type]);
   return (
-    <div>
+    <div className="flex flex-col bg-[url('https://tinyurl.com/29b4cyrp')] bg-cover w-full">
       { recipe[recipeType.toLowerCase()]
       && <RecipeInfo
         recipe={ recipe[recipeType.toLowerCase()][0] }

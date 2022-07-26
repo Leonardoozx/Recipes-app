@@ -8,7 +8,6 @@ import blackHeart from '../images/blackHeartIcon.svg';
 function ShareBtns({
   alcoholicOrNot, category, id, image, name, nationality, type, favoriteBtn, testId }) {
   const props = { alcoholicOrNot, category, id, image, name, nationality, type };
-  const [willAppearText, appearText] = useState(false);
   const [imageKey, setImageKey] = useState(0);
 
   const onFavoriteBtnClick = (ID) => {
@@ -29,21 +28,17 @@ function ShareBtns({
   };
 
   return (
-    <>
-      { willAppearText && <span>Link copied!</span> }
-
+    <div className="flex flex-col space-y-2 justify-center ml-3">
       <button
         data-testid={ testId }
         type="button"
         onClick={ () => {
-          copy(`http://localhost:3000/${type}s/${id}`);
-          appearText(true);
+          copy(`${window.location.host}/${type}s/${id}`);
         } }
         src={ buttonImg }
       >
         <img src={ buttonImg } alt="button img" />
       </button>
-
       { favoriteBtn
       && (
         <button
@@ -58,7 +53,7 @@ function ShareBtns({
           />
         </button>
       )}
-    </>
+    </div>
   );
 }
 
