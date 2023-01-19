@@ -168,3 +168,10 @@
     Os ingredientes seguem uma ordem lógica onde o nome dele (<code>strIngredient1</code>) e a quantidade (<code>strMeasure1</code>) tem o mesmo número no final (1, nesse caso).
       </details>
     </details>
+
+# Como rodar o projeto:
+
+- Na raiz do projeto, no seu terminal, rode o comando `npm start`
+- Espere ao menos 15 segundos para o projeto estar no ar, e entre em (http://localhost:3000/)[http://localhost:3000/]
+- Coloque algum email e senha meramente ilustrativo
+- Aproveite :)
