@@ -15,14 +15,6 @@ function FavoriteRecipesDetails({
   name,
   image,
 }) {
-  // const filterRecipe = () => {
-  //     if (typeFilter === 'food') {
-  //       return favoriteRecipes.filter((recipe) => recipe.type === 'food');
-  //     }
-  //     if (typeFilter === 'drink') {
-  //       return favoriteRecipes.filter((recipe) => recipe.type === 'drink');
-  //     }
-  //   };
   const [copyUrlRecipe, setCopyUrlRecipe] = useState(false);
   const filterRecipe = type === 'food' ? nationality : alcoholicOrNot;
 
@@ -39,11 +31,8 @@ function FavoriteRecipesDetails({
     }
   }
   return (
-    <li
-      key={ id }
-      id={ id }
-    >
-      <div>
+    <div key={ id } id={ id }>
+      <div className="flex">
         <Link to={ `/${type}s/${id}` }>
           <img
             data-testid={ `${index}-horizontal-image` }
@@ -63,7 +52,7 @@ function FavoriteRecipesDetails({
             { name }
           </p>
         </Link>
-        <div>
+        <div className="flex flex-col justify-center">
           <button
             type="button"
             onClick={ () => {
@@ -94,7 +83,7 @@ function FavoriteRecipesDetails({
           </button>
         </div>
       </div>
-    </li>
+    </div>
   );
 }
 

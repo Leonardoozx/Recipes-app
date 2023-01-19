@@ -46,9 +46,9 @@ function FavoriteRecipes() {
         renderButton={ false }
         title="Favorite Recipes"
       />
-      <ul>
+      <div>
         { showFavoriteRecipes() }
-      </ul>
+      </div>
       <button
         data-testid="filter-by-all-btn"
         type="button"
