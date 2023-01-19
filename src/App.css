@@ -1,4 +1,9 @@
-.meals {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -13,7 +18,7 @@
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
 /*
 #iceLeft {
@@ -29,13 +34,13 @@
 }
 */
 
-.meals > .logo {
+/* .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-family: Montserrat , sans-serif;
   font-size: 3em;
   font-weight: 900;
-}
+} */
 
 @keyframes shake {
 
@@ -66,3 +71,48 @@
     transform: rotate(-10deg);
   }
 }
+
+/* footer {
+  background-color: gray;
+  bottom: 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+} */
+
+/* .recipes-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+} */
+
+/* .recipe-card {
+  width: 150px;
+}
+
+.recipe-card img {
+  width: 100%;
+}
+
+.category-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.category-button {
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+} */
